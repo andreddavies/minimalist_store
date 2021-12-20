@@ -1,12 +1,14 @@
 import React from "react";
 
+import Header from "../components/molecules/Header/Header";
+
 import * as S from "./App.styles";
 
 class App extends React.Component {
   render() {
     return (
       <S.App>
-        <h1>Hello, Welcome to Minimalist Store!!!</h1>
+        <Header />
       </S.App>
     );
   }
