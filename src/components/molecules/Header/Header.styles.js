@@ -11,7 +11,9 @@ const HeaderContainer = styled.header`
 const Box = styled.div`
   width: 30%;
   height: 100%;
-  background: blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Image = styled.img`
