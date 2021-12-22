@@ -2,6 +2,13 @@ export const colors = {
   primary: "#FFF",
   secondary: "#000",
 
+  paragraph: {
+    primary: "#FFF",
+    secondary: "#1D1F22",
+    tertiary: "#5ECE7B",
+    disabled: "#8D8F9A",
+  },
+
   buttons: {
     primary: {
       text: "#1D1F22",
