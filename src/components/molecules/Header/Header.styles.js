@@ -14,6 +14,7 @@ const Box = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: ${({ margin }) => `${margin}`};
 `;
 
 const Image = styled.img`
