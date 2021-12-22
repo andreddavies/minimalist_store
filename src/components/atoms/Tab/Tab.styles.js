@@ -10,10 +10,4 @@ const TabContainer = styled.div`
   width: ${({ width }) => (!width && "100%") || `${width}`};
 `;
 
-const Paragraph = styled.p`
-  color: #5ece7b;
-  font-size: 16px;
-  font-weight: 600;
-`;
-
-export { TabContainer, Paragraph };
+export { TabContainer };
