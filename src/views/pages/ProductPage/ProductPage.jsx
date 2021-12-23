@@ -1,7 +1,9 @@
 import React from "react";
-import withRouter from "../../hocs/withRouter";
+import withRouter from "../../../hocs/withRouter";
 
-import PagesContainer from "../../components/organisms/PagesContainer/PagesContainer";
+import PagesContainer from "../../../components/organisms/PagesContainer/PagesContainer";
+
+import * as S from "./ProductPage.styles";
 
 class ProductPage extends React.Component {
   render() {
