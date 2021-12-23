@@ -1,8 +1,15 @@
 import React from "react";
 
+import Header from "../../components/molecules/Header/Header";
+import PagesContainer from "../../components/organisms/PagesContainer/PagesContainer";
+
 class CartPage extends React.Component {
   render() {
-    return <h1>CartPage</h1>;
+    return (
+      <PagesContainer>
+        <Header />
+      </PagesContainer>
+    );
   }
 }
 
