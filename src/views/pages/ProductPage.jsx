@@ -1,7 +1,6 @@
 import React from "react";
 import withRouter from "../../hocs/withRouter";
 
-import Header from "../../components/molecules/Header/Header";
 import PagesContainer from "../../components/organisms/PagesContainer/PagesContainer";
 
 class ProductPage extends React.Component {
@@ -10,7 +9,6 @@ class ProductPage extends React.Component {
 
     return (
       <PagesContainer>
-        <Header />
         <p>{productId}</p>
       </PagesContainer>
     );
