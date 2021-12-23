@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import CartPage from "../../../views/pages/CartPage";
-import ProductPage from "../../../views/pages/ProductPage";
-import CategoryPage from "../../../views/pages/CategoryPage";
+import CartPage from "../../../views/pages/CartPage/CartPage";
+import ProductPage from "../../../views/pages/ProductPage/ProductPage";
+import CategoryPage from "../../../views/pages/CategoryPage/CategoryPage";
 
 import * as S from "./Content.styles";
 
