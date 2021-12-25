@@ -8,9 +8,10 @@ import * as S from "./CategoryPage.styles";
 class CategoryPage extends React.Component {
   render() {
     const productId = "ps-5";
+    const categoryTitle = "Category One";
     return (
       <PagesContainer>
-        <h1>Category Page</h1>
+        <S.TitleWrapper>{categoryTitle}</S.TitleWrapper>
         <Link to={`/product/${productId}`}>Playstation 5</Link>
       </PagesContainer>
     );
