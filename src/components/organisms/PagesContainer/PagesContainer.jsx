@@ -6,7 +6,7 @@ class PagesContainer extends React.Component {
   render() {
     return (
       <S.Container>
-        <div>{this.props.children}</div>
+        <S.ChildrenWrapper>{this.props.children}</S.ChildrenWrapper>
       </S.Container>
     );
   }
