@@ -32,4 +32,10 @@ export const colors = {
       background: "#FFF",
     },
   },
+
+  productCard: {
+    cardShadow: "rgba(168, 172, 176, 0.19)",
+
+    outOfStock: "#8D8F9A",
+  },
 };
