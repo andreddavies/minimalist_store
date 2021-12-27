@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import CartIcon from "../../../icons/AddToCartIcon";
+import FlexContainer from "../../atoms/FlexContainer/FlexContainer";
 
 import * as S from "./ProductList.styles";
 
@@ -14,9 +15,16 @@ class ProductList extends React.Component {
         <S.List>
           {this.props.products.map((element, index) => (
             <S.ListItem key={index}>
-              <S.Center>
+              <FlexContainer
+                width="100%"
+                direction="column"
+                styleProps="padding: 16px"
+              >
                 <S.ImageWrapper inStock={element.inStock}>
-                  <img src="https://i.zst.com.br/thumbs/12/3e/2f/1340384387.jpg" />
+                  <img
+                    alt="ProductOne"
+                    src="https://i.zst.com.br/thumbs/12/3e/2f/1340384387.jpg"
+                  />
                   <S.IconWrapper onClick={() => console.log("Hello")}>
                     <Link to={`/product/${productId}`}>
                       <CartIcon width={52} height={52} />
@@ -30,7 +38,7 @@ class ProductList extends React.Component {
                     {element.price}
                   </S.PriceWrapper>
                 </S.ProductInfoWrapper>
-              </S.Center>
+              </FlexContainer>
             </S.ListItem>
           ))}
         </S.List>
