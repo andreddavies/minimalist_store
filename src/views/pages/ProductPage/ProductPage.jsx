@@ -11,7 +11,7 @@ class ProductPage extends React.Component {
     const { productId } = this.props.params;
 
     return (
-      <PagesContainer>
+      <PagesContainer width="95%" tabletScreenWidth="95%">
         <Product />
       </PagesContainer>
     );
