@@ -29,11 +29,6 @@ const ListItem = styled.li`
   }
 `;
 
-const Center = styled.div`
-  width: 100%;
-  padding: 16px;
-`;
-
 const ImageWrapper = styled.div`
   width: 100%;
   max-width: 354px;
@@ -90,7 +85,6 @@ const PriceWrapper = styled.div`
 export {
   List,
   Title,
-  Center,
   ListItem,
   Container,
   IconWrapper,
