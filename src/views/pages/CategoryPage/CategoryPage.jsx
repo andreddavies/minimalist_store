@@ -8,7 +8,7 @@ import * as S from "./CategoryPage.styles";
 class CategoryPage extends React.Component {
   render() {
     const products = [
-      { title: "Product One", price: 2400, currency: "$", inStock: false },
+      { title: "Product One", price: 2400, currency: "$", inStock: true },
     ];
     const categoryTitle = "Category One";
 
