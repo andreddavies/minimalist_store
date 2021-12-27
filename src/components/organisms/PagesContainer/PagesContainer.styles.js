@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 95%;
   display: flex;
   margin: 0 auto;
   justify-content: center;
+  width: ${({ width }) => (!width && "95%") || `${width}`};
 
   @media screen and (min-width: 768px) {
-    width: 85%;
+    width: ${({ tabletScreenWidth }) =>
+      (!tabletScreenWidth && "85%") || `${tabletScreenWidth}`};
   }
 `;
 
