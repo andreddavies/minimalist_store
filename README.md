@@ -13,4 +13,9 @@ You can add a product to cart, click on product to go to Product Page, also you 
 
 ### Product Page
 
+Product page, commonly know as Product Details Page, show you the product details. Like title, price, description and so much more. Here you can add to cart and select which variation do you
+want. See product gallery and details in the photos.
+
 ### Cart Page
+
+See your cart with the products that you added here. Change product variations, exclude and increase the quantity of a product.
