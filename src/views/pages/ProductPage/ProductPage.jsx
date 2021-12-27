@@ -1,6 +1,7 @@
 import React from "react";
 import withRouter from "../../../hocs/withRouter";
 
+import Product from "../../../components/molecules/Product/Product";
 import PagesContainer from "../../../components/organisms/PagesContainer/PagesContainer";
 
 import * as S from "./ProductPage.styles";
@@ -11,7 +12,7 @@ class ProductPage extends React.Component {
 
     return (
       <PagesContainer>
-        <p>{productId}</p>
+        <Product />
       </PagesContainer>
     );
   }
