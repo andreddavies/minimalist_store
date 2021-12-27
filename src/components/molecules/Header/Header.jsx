@@ -17,15 +17,13 @@ class Header extends React.PureComponent {
           <S.Image src={`${process.env.PUBLIC_URL}/assets/logo.png`} />
         </S.Box>
         <S.Box>
-          <S.Box margin="0 20px 0 0">
-            <Select
-              options={[
-                { currency: "$ USD" },
-                { currency: "€ EUR" },
-                { currency: "¥ JPY" },
-              ]}
-            />
-          </S.Box>
+          <Select
+            options={[
+              { currency: "$ USD" },
+              { currency: "€ EUR" },
+              { currency: "¥ JPY" },
+            ]}
+          />
           <CartIcon width={20} height={20} />
         </S.Box>
       </S.HeaderContainer>
