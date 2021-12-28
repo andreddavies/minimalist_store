@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Button = styled.button`
   outline: 0;
+  cursor: pointer;
   background: ${({ theme, btnStyle }) =>
     (btnStyle === "none" && "none") ||
     theme.colors.buttons[btnStyle].background};
