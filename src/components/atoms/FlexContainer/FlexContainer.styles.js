@@ -7,7 +7,7 @@ const Container = styled.div`
     align-items: ${({ align }) => `${align}`};
     justify-content: ${({ justify }) => `${justify}`};
     flex-direction: ${({ direction }) => `${direction}`};
-    margin: ${({ margin }) => (!margin && "0.75rem") || `${margin}`};
+    margin: ${({ margin }) => (!margin && "1rem 0") || `${margin}`};
 
     ${({ styleProps }) => `${styleProps}`};
 `;
