@@ -9,6 +9,11 @@ export const colors = {
     disabled: "#8D8F9A",
   },
 
+  heading: {
+    primary: "1D1F22",
+    secondary: "#FFF",
+  },
+
   buttons: {
     primary: {
       text: "#1D1F22",
@@ -37,5 +42,11 @@ export const colors = {
     cardShadow: "rgba(168, 172, 176, 0.19)",
 
     outOfStock: "#8D8F9A",
+  },
+
+  cart: {
+    product: {
+      border: "#E5E5E5",
+    },
   },
 };
