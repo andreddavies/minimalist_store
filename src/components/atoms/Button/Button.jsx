@@ -10,8 +10,10 @@ class Button extends React.PureComponent {
         width={this.props.width}
         height={this.props.height}
         onClick={this.props.onClick}
+        fontSize={this.props.fontSize}
         btnStyle={this.props.btnStyle}
         disabled={this.props.disabled}
+        fontWeight={this.props.fontWeight}
       >
         {this.props.children}
       </S.Button>
