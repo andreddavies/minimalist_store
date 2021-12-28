@@ -47,11 +47,7 @@ class Product extends React.Component {
                 Size:
               </S.Title>
             </FlexContainer>
-            <FlexContainer
-              width="100%"
-              justify="space-between"
-              styleProps="max-width: 288px"
-            >
+            <FlexContainer width="100%" justify="space-between">
               <Button
                 width="63px"
                 height="45px"
