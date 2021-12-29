@@ -4,6 +4,9 @@ import Button from "../../atoms/Button/Button";
 import Heading from "../../atoms/Heading/Heading";
 import FlexContainer from "../../atoms/FlexContainer/FlexContainer";
 
+import LessThanIcon from "../../../icons/LessThanIcon";
+import GreaterThanIcon from "../../../icons/GreaterThanIcon";
+
 import * as S from "./Cart.styles";
 
 class Cart extends React.Component {
@@ -14,7 +17,7 @@ class Cart extends React.Component {
           Cart
         </Heading>
         <FlexContainer width="100%" direction="column" margin="4rem 0 0 0">
-          <S.Wrapper>
+          <S.Wrapper margin="1rem 0" styleProps="max-height: 224px">
             <FlexContainer
               width="50%"
               justify="center"
@@ -53,11 +56,71 @@ class Cart extends React.Component {
                 </S.Wrapper>
               </FlexContainer>
             </FlexContainer>
-            <FlexContainer
-              width="50%"
-              justify="flex-end"
-              align="center"
-            ></FlexContainer>
+            <FlexContainer width="50%" justify="flex-end" align="center">
+              <FlexContainer
+                align="center"
+                direction="column"
+                justify="space-between"
+              >
+                <Button
+                  width="45px"
+                  height="45px"
+                  fontSize="2rem"
+                  fontWeight="400"
+                  btnStyle="primary"
+                  onClick={() => console.log("Hello")}
+                >
+                  +
+                </Button>
+                <Heading color="primary" size="1.71rem" weight="500">
+                  1
+                </Heading>
+                <Button
+                  width="45px"
+                  height="45px"
+                  fontSize="2rem"
+                  fontWeight="400"
+                  btnStyle="primary"
+                  onClick={() => console.log("Hello")}
+                >
+                  -
+                </Button>
+              </FlexContainer>
+              <FlexContainer margin="0 0 0 1rem" height="100%">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button
+                    width="24px"
+                    height="24px"
+                    type="button"
+                    btnStyle="none"
+                    styleProps="position: relative; left: 24px;"
+                    onClick={() => console.log("Hello")}
+                  >
+                    <LessThanIcon width={24} height={24} />
+                  </Button>
+                  <S.Img
+                    alt="ProductOne"
+                    src="https://i.zst.com.br/thumbs/12/3e/2f/1340384387.jpg"
+                  />
+                  <Button
+                    width="24px"
+                    height="24px"
+                    type="button"
+                    btnStyle="none"
+                    styleProps="position: relative; right: 24px;"
+                    onClick={() => console.log("Hello")}
+                  >
+                    <GreaterThanIcon width={24} height={24} />
+                  </Button>
+                </div>
+              </FlexContainer>
+            </FlexContainer>
           </S.Wrapper>
         </FlexContainer>
       </FlexContainer>
