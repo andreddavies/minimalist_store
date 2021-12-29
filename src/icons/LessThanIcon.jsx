@@ -12,10 +12,10 @@ class LessThanIcon extends React.PureComponent {
       >
         <path
           d="M15 18L9 12L15 6"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          stroke="#adadad"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     );

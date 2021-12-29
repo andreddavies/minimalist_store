@@ -12,10 +12,10 @@ class GreaterThanIcon extends React.PureComponent {
       >
         <path
           d="M9 18L15 12L9 6"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          stroke="#adadad"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     );
