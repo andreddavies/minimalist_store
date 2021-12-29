@@ -13,6 +13,7 @@ class Button extends React.PureComponent {
         fontSize={this.props.fontSize}
         btnStyle={this.props.btnStyle}
         disabled={this.props.disabled}
+        styleProps={this.props.styleProps}
         fontWeight={this.props.fontWeight}
       >
         {this.props.children}
