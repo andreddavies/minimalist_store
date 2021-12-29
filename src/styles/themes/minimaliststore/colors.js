@@ -10,7 +10,7 @@ export const colors = {
   },
 
   heading: {
-    primary: "1D1F22",
+    primary: "#1D1F22",
     secondary: "#FFF",
   },
 
