@@ -13,6 +13,7 @@ class FlexContainer extends React.Component {
         justify={this.props.justify}
         direction={this.props.direction}
         styleProps={this.props.styleProps}
+        tabletMinScreen={this.props.tabletMinScreen}
       >
         {this.props.children}
       </S.Container>
