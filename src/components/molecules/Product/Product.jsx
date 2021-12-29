@@ -37,7 +37,11 @@ class Product extends React.Component {
           </S.ImageWrapper>
         </S.GalleryContainer>
         <S.ProductDetailsContainer>
-          <FlexContainer width="70%" direction="column">
+          <FlexContainer
+            width="100%"
+            direction="column"
+            tabletMinScreen="width: 70%"
+          >
             <FlexContainer width="100%" direction="column" align="flex-start">
               <S.Title weight="600">Apollo</S.Title>
               <S.Title weight="400">Running Short</S.Title>
