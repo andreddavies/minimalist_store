@@ -17,7 +17,14 @@ class Cart extends React.Component {
           Cart
         </Heading>
         <FlexContainer width="100%" direction="column" margin="4rem 0 0 0">
-          <S.Wrapper margin="1rem 0" styleProps="max-height: 224px">
+          <S.Wrapper
+            margin="1rem 0"
+            direction="column-reverse"
+            tabletMinScreen={`
+            max-height: 224px;
+              flex-direction: row;
+            `}
+          >
             <FlexContainer
               width="50%"
               justify="center"
@@ -56,11 +63,28 @@ class Cart extends React.Component {
                 </S.Wrapper>
               </FlexContainer>
             </FlexContainer>
-            <FlexContainer width="50%" justify="flex-end" align="center">
+            <FlexContainer
+              width="100%"
+              align="center"
+              justify="center"
+              direction="column-reverse"
+              tabletMinScreen={`
+                width: 50%;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-end;
+              `}
+            >
               <FlexContainer
+                width="100%"
                 align="center"
-                direction="column"
-                justify="space-between"
+                justify="space-evenly"
+                tabletMinScreen={`
+                  width: auto;
+                  align-items: center;
+                  flex-direction: column;
+                  justify-content: space-between;
+                `}
               >
                 <Button
                   width="45px"
@@ -87,13 +111,7 @@ class Cart extends React.Component {
                 </Button>
               </FlexContainer>
               <FlexContainer margin="0 0 0 1rem" height="100%">
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
+                <FlexContainer align="center" justify="center">
                   <Button
                     width="24px"
                     height="24px"
@@ -118,7 +136,7 @@ class Cart extends React.Component {
                   >
                     <GreaterThanIcon width={24} height={24} />
                   </Button>
-                </div>
+                </FlexContainer>
               </FlexContainer>
             </FlexContainer>
           </S.Wrapper>
