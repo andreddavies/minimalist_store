@@ -19,16 +19,25 @@ export const colors = {
       text: "#1D1F22",
       border: "#1D1F22",
       background: "#FFF",
+
+      hover: "#CCC",
+      active: "#60626C",
     },
     secondary: {
       text: "#FFF",
       border: "#1D1F22",
       background: "#1D1F22",
+
+      hover: "#000",
+      active: "#CFCFCF",
     },
     tertiary: {
       text: "#FFF",
       border: "#5ECE7B",
       background: "#5ECE7B",
+
+      hover: "#239c4e",
+      active: "#92ffab",
     },
 
     disabled: {
