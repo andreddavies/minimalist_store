@@ -8,6 +8,10 @@ const Wrapper = styled(Container)`
   border-top: 1px solid ${({ theme }) => theme.colors.cart.product.border};
 
   ${({ styleProps }) => styleProps && `${styleProps}`};
+
+  @media screen and (min-width: 768px) {
+    ${({ tabletMinScreen }) => tabletMinScreen && `${tabletMinScreen}`};
+  }
 `;
 
 const Img = styled.img`
