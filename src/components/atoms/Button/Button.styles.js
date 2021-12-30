@@ -18,6 +18,16 @@ const Button = styled.button`
   font-weight: ${({ fontWeight }) => fontWeight && `${fontWeight}`};
 
   ${({ styleProps }) => styleProps && `${styleProps}`};
+
+  &&:hover {
+    background: ${({ theme, btnStyle }) =>
+      (btnStyle === "none" && "none") || theme.colors.buttons[btnStyle].hover};
+  }
+
+  &&:active {
+    background: ${({ theme, btnStyle }) =>
+      (btnStyle === "none" && "none") || theme.colors.buttons[btnStyle].active};
+  }
 `;
 
 export { Button };
