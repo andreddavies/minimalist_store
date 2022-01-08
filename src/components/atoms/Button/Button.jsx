@@ -8,6 +8,7 @@ class Button extends React.PureComponent {
       <S.Button
         type={this.props.type}
         width={this.props.width}
+        margin={this.props.margin}
         height={this.props.height}
         onClick={this.props.onClick}
         fontSize={this.props.fontSize}
@@ -15,6 +16,7 @@ class Button extends React.PureComponent {
         disabled={this.props.disabled}
         styleProps={this.props.styleProps}
         fontWeight={this.props.fontWeight}
+        tabletMinScreen={this.props.tabletMinScreen}
       >
         {this.props.children}
       </S.Button>

@@ -9,6 +9,7 @@ const Button = styled.button`
   background: ${({ theme, btnStyle }) =>
     (btnStyle === "none" && "transparent") ||
     theme.colors.buttons[btnStyle].background};
+  margin: ${({ margin }) => margin && `${margin}`};
   border: ${({ theme, btnStyle }) =>
     (btnStyle === "none" && "transparent") ||
     `1px solid ${theme.colors.buttons[btnStyle].border}`};
@@ -27,6 +28,10 @@ const Button = styled.button`
   &&:active {
     background: ${({ theme, btnStyle }) =>
       (btnStyle === "none" && "none") || theme.colors.buttons[btnStyle].active};
+  }
+
+  @media screen and (min-width: 768px) {
+    ${({ tabletMinScreen }) => tabletMinScreen && `${tabletMinScreen}`};
   }
 `;
 
