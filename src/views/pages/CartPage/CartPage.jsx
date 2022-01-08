@@ -7,7 +7,7 @@ class CartPage extends React.Component {
   render() {
     return (
       <PagesContainer>
-        <Cart />
+        <Cart isShowing={true} />
       </PagesContainer>
     );
   }
