@@ -2,6 +2,8 @@ export const colors = {
   primary: "#FFF",
   secondary: "#000",
 
+  backgroundWall: "rgba(57, 55, 72, 0.22)",
+
   paragraph: {
     primary: "#FFF",
     secondary: "#1D1F22",
@@ -56,6 +58,10 @@ export const colors = {
   cart: {
     product: {
       border: "#E5E5E5",
+    },
+
+    overlay: {
+      background: "#1D1F22",
     },
   },
 };
