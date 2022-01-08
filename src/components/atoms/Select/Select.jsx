@@ -2,7 +2,7 @@ import React from "react";
 
 import * as S from "./Select.styles";
 
-class Select extends React.PureComponent {
+class Select extends React.Component {
   render() {
     return (
       <S.Select>
