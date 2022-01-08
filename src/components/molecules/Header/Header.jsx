@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Tab from "../../atoms/Tab/Tab";
 import Button from "../../atoms/Button/Button";
@@ -16,7 +17,9 @@ class Header extends React.Component {
           <Tab width="100%" isActive={true} text="Women" />
         </S.Box>
         <S.Box>
-          <S.Image src={`${process.env.PUBLIC_URL}/assets/logo.png`} />
+          <Link to="/">
+            <S.Image src={`${process.env.PUBLIC_URL}/assets/logo.png`} />
+          </Link>
         </S.Box>
         <S.Box justify="flex-start">
           <Select
