@@ -13,7 +13,29 @@ const Box = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: ${({ justify }) => (!justify && "center") || `${justify}`};
+
+  @media screen and (min-width: 768px) {
+    justify-content: ${({ justify }) => justify && "center"};
+  }
+`;
+
+const CartQuantity = styled.div`
+  top: -35px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  position: relative;
+  border-radius: 60px;
+  align-items: center;
   justify-content: center;
+  background: ${({ theme }) => theme.colors.cart.overlay.background};
+
+  @media screen and (min-width: 768px) {
+    top: -35px;
+    right: -10px;
+  }
 `;
 
 const Image = styled.img`
@@ -21,4 +43,4 @@ const Image = styled.img`
   height: 41px;
 `;
 
-export { HeaderContainer, Box, Image };
+export { HeaderContainer, Box, CartQuantity, Image };
