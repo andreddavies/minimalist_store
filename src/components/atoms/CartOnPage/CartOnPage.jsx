@@ -25,11 +25,11 @@ class CartOnPage extends React.Component {
                 Cart
               </Heading>
             </FlexContainer>
-            <FlexContainer width="100%" direction="column" margin="1rem 0 0 0">
+            <S.Wrapper width="100%" direction="column" margin="1rem 0 0 0">
               <FlexContainer
                 margin="1rem 0"
                 tabletMinScreen={`
-                height: 137px;
+                  height: 185px;
               `}
               >
                 <FlexContainer
@@ -38,11 +38,37 @@ class CartOnPage extends React.Component {
                   align="flex-start"
                   direction="column"
                 >
-                  <Heading margin="0.85rem 0 0 0" size="1.15rem" weight="300">
-                    Apollo <br />
-                    Running Short <br />
+                  <Heading
+                    weight="300"
+                    size="1.15rem"
+                    margin="0.85rem 0 0 0"
+                    tabletMinScreen={`
+                      font-weight: 600;
+                      font-size: 2.15rem;
+                    `}
+                  >
+                    Apollo
                   </Heading>
-                  <Heading margin="0.85rem 0 0 0" size="1.15rem" weight="500">
+                  <Heading
+                    margin="0"
+                    weight="300"
+                    size="1.15rem"
+                    tabletMinScreen={`
+                      font-weight: 400;
+                      font-size: 2.15rem;
+                    `}
+                  >
+                    Running Short
+                  </Heading>
+                  <Heading
+                    size="1.15rem"
+                    weight="500"
+                    margin="0.85rem 0 0 0"
+                    tabletMinScreen={`
+                      font-weight: 700;
+                      font-size: 1.72rem;
+                    `}
+                  >
                     $50.00
                   </Heading>
                   <FlexContainer width="100%" align="center">
@@ -53,16 +79,26 @@ class CartOnPage extends React.Component {
                         fontSize="1rem"
                         fontWeight="400"
                         btnStyle="primary"
+                        tabletMinScreen={`
+                          width: 63px;
+                          height: 45px;
+                          font-size: 1.15rem;
+                        `}
                       >
                         S
                       </Button>
                       <Button
                         width="24px"
                         height="24px"
-                        margin="0 0.6rem"
                         fontSize="1rem"
                         fontWeight="400"
+                        margin="0 0.6rem"
                         btnStyle="primary"
+                        tabletMinScreen={`
+                          width: 63px;
+                          height: 45px;
+                          font-size: 1.15rem;
+                        `}
                       >
                         M
                       </Button>
@@ -76,6 +112,9 @@ class CartOnPage extends React.Component {
                     direction="column"
                     justify="space-between"
                     styleProps={`height: 137px;`}
+                    tabletMinScreen={`
+                      height: 185px;
+                    `}
                   >
                     <Button
                       width="24px"
@@ -83,6 +122,11 @@ class CartOnPage extends React.Component {
                       fontSize="1rem"
                       fontWeight="400"
                       btnStyle="primary"
+                      tabletMinScreen={`
+                        width: 45px;
+                        height: 45px;
+                        font-size: 1.5rem;
+                      `}
                       onClick={() => console.log("Hello")}
                     >
                       +
@@ -96,12 +140,22 @@ class CartOnPage extends React.Component {
                       fontSize="1rem"
                       fontWeight="400"
                       btnStyle="primary"
+                      tabletMinScreen={`
+                        width: 45px;
+                        height: 45px;
+                        font-size: 1.5rem;
+                      `}
                       onClick={() => console.log("Hello")}
                     >
                       -
                     </Button>
                   </FlexContainer>
-                  <FlexContainer margin="0 0 0 1rem">
+                  <FlexContainer
+                    margin="0 0 0 1rem"
+                    tabletMinScreen={`
+                      height: 185px;
+                    `}
+                  >
                     <FlexContainer align="center" justify="center">
                       <Button
                         width="24px"
@@ -131,7 +185,7 @@ class CartOnPage extends React.Component {
                   </FlexContainer>
                 </FlexContainer>
               </FlexContainer>
-            </FlexContainer>
+            </S.Wrapper>
           </FlexContainer>
           {this.props.children}
         </FlexContainer>
