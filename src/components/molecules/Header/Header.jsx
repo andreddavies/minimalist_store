@@ -1,12 +1,14 @@
 import React from "react";
 
 import Tab from "../../atoms/Tab/Tab";
-import CartIcon from "../../../icons/CartIcon";
+import Button from "../../atoms/Button/Button";
 import Select from "../../atoms/Select/Select";
+import CartIcon from "../../../icons/CartIcon";
+import Heading from "../../atoms/Heading/Heading";
 
 import * as S from "./Header.styles";
 
-class Header extends React.PureComponent {
+class Header extends React.Component {
   render() {
     return (
       <S.HeaderContainer>
@@ -16,7 +18,7 @@ class Header extends React.PureComponent {
         <S.Box>
           <S.Image src={`${process.env.PUBLIC_URL}/assets/logo.png`} />
         </S.Box>
-        <S.Box>
+        <S.Box justify="flex-start">
           <Select
             options={[
               { currency: "$ USD" },
@@ -24,7 +26,24 @@ class Header extends React.PureComponent {
               { currency: "¥ JPY" },
             ]}
           />
-          <CartIcon width={20} height={20} />
+          <S.Box>
+            <Button
+              type="button"
+              width="20px"
+              height="20px"
+              btnStyle="none"
+              onClick={() => {
+                console.log("Hello");
+              }}
+            >
+              <CartIcon width={20} height={20} />
+              <S.CartQuantity>
+                <Heading size="14px" color="secondary" weight="700">
+                  2
+                </Heading>
+              </S.CartQuantity>
+            </Button>
+          </S.Box>
         </S.Box>
       </S.HeaderContainer>
     );
