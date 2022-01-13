@@ -11,6 +11,4 @@ const Select = styled.select`
   font-weight: ${({ theme }) => theme.text.weight.medium};
 `;
 
-const Option = styled.option``;
-
-export { Select, Option };
+export { Select };
