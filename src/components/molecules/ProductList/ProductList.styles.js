@@ -13,6 +13,7 @@ const List = styled.ul`
 const ListItem = styled.li`
   width: 40%;
   margin: 50px 0;
+  cursor: pointer;
   max-width: 354px;
 
   &&:hover {
@@ -41,8 +42,9 @@ const ImageWrapper = styled.div`
 
 const IconWrapper = styled.div`
   top: -26px;
-  width: 95%;
-  height: 52px;
+  right: -70%;
+  width: 60px;
+  height: 60px;
   display: flex;
   position: relative;
   justify-content: flex-end;
