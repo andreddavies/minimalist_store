@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import Tab from "../../atoms/Tab/Tab";
@@ -7,10 +8,21 @@ import Select from "../../atoms/Select/Select";
 import CartIcon from "../../../icons/CartIcon";
 import Heading from "../../atoms/Heading/Heading";
 
+import { store } from "../../../store";
+
 import * as S from "./Header.styles";
 
 class Header extends React.Component {
   render() {
+    const { dispatch } = store;
+    const rootState = store.getState().store;
+
+    const options = [
+      { symbol: "$", label: "USD" },
+      { symbol: "€", label: "EUR" },
+      { symbol: "¥", label: "JPY" },
+    ];
+
     return (
       <S.HeaderContainer>
         <S.Box>
@@ -23,28 +35,34 @@ class Header extends React.Component {
         </S.Box>
         <S.Box justify="flex-start">
           <Select
-            options={[
-              { currency: "$ USD" },
-              { currency: "€ EUR" },
-              { currency: "¥ JPY" },
-            ]}
-          />
+            onChange={(event) => {
+              dispatch.store.setCurrency(options[event.target.selectedIndex]);
+            }}
+          >
+            {options.map((option, index) => (
+              <option key={index}>
+                {option.symbol} {option.label}
+              </option>
+            ))}
+          </Select>
           <S.Box>
             <Button
-              type="button"
               width="20px"
+              type="button"
               height="20px"
               btnStyle="none"
               onClick={() => {
-                console.log("Hello");
+                dispatch.store.setCartOverlay(!rootState.cartOverlay);
               }}
             >
               <CartIcon width={20} height={20} />
-              <S.CartQuantity>
-                <Heading size="14px" color="secondary" weight="700">
-                  2
-                </Heading>
-              </S.CartQuantity>
+              {rootState.cart.quantity > 0 && (
+                <S.CartQuantity>
+                  <Heading size="14px" color="secondary" weight="700">
+                    {rootState.cart.quantity}
+                  </Heading>
+                </S.CartQuantity>
+              )}
             </Button>
           </S.Box>
         </S.Box>
@@ -53,4 +71,12 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapState = (state) => ({
+  store: state.store,
+});
+
+const mapDispatch = (dispatch) => ({
+  setCartOverlay: dispatch.store.setCartOverlay,
+});
+
+export default connect(mapState, mapDispatch)(Header);
