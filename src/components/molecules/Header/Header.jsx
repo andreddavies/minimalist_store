@@ -9,24 +9,52 @@ import CartIcon from "../../../icons/CartIcon";
 import Heading from "../../atoms/Heading/Heading";
 
 import { store } from "../../../store";
+import { GET_CURRENCIES } from "../../../services/queries/currencies";
+import { GET_CATEGORIES } from "../../../services/queries/categories";
 
 import * as S from "./Header.styles";
 
 class Header extends React.Component {
+  state = {
+    categories: [],
+    currencies: [],
+  };
+
+  componentDidMount() {
+    GET_CATEGORIES().then((categoriesResult) => {
+      GET_CURRENCIES().then((currenciesResult) => {
+        this.setState({
+          categories: categoriesResult.data.categories,
+          currencies: currenciesResult.data.currencies,
+        });
+      });
+    });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      this.state !== nextState ||
+      store.getState().store.currentCategory ||
+      store.getState().store.currency
+    );
+  }
+
   render() {
     const { dispatch } = store;
     const rootState = store.getState().store;
 
-    const options = [
-      { symbol: "$", label: "USD" },
-      { symbol: "€", label: "EUR" },
-      { symbol: "¥", label: "JPY" },
-    ];
-
     return (
       <S.HeaderContainer>
         <S.Box>
-          <Tab width="100%" isActive={true} text="Women" />
+          {this.state.categories.map((el, index) => (
+            <Tab
+              key={index}
+              width="100%"
+              text={el.name.toUpperCase()}
+              isActive={rootState.currentCategory === el.name}
+              onClick={() => dispatch.store.setCategory(el.name)}
+            />
+          ))}
         </S.Box>
         <S.Box>
           <Link to="/">
@@ -36,11 +64,16 @@ class Header extends React.Component {
         <S.Box justify="flex-start">
           <Select
             onChange={(event) => {
-              dispatch.store.setCurrency(options[event.target.selectedIndex]);
+              dispatch.store.setCurrency(
+                this.state.currencies[event.target.selectedIndex]
+              );
             }}
           >
-            {options.map((option, index) => (
-              <option key={index}>
+            {this.state.currencies.map((option, index) => (
+              <option
+                key={index}
+                selected={option.label === rootState.currency.label}
+              >
                 {option.symbol} {option.label}
               </option>
             ))}
@@ -76,6 +109,8 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
+  setCategory: dispatch.store.setCategory,
+  setCurrency: dispatch.store.setCurrency,
   setCartOverlay: dispatch.store.setCartOverlay,
 });
 
