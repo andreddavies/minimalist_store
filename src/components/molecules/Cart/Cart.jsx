@@ -12,7 +12,7 @@ class Cart extends React.Component {
       <S.CartContainer isShowing={this.props.isShowing}>
         {(this.props.type === "cartOverlay" && (
           <CartOverlay>
-            <CartFooter />
+            <CartFooter cartOverlay />
           </CartOverlay>
         )) || (
           <CartOnPage>

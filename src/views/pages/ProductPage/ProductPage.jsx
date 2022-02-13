@@ -8,7 +8,7 @@ class ProductPage extends React.Component {
   render() {
     return (
       <PagesContainer width="95%" tabletScreenWidth="95%">
-        <Product />
+        <Product productId={this.props.params.productId} />
       </PagesContainer>
     );
   }
