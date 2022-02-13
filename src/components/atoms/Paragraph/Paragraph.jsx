@@ -2,7 +2,7 @@ import React from "react";
 
 import * as S from "./Paragraph.styles";
 
-class Paragraph extends React.PureComponent {
+class Paragraph extends React.Component {
   render() {
     return (
       <S.Paragraph
