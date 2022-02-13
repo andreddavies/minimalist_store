@@ -1,8 +1,9 @@
 import { createModel } from "@rematch/core";
 
+import { setCategory } from "./category";
 import { setCurrency } from "./currency";
-import { setCart, clearCart } from "./cart";
 import { setCartOverlay } from "./cartOverlay";
+import { setCart, setAttributes, setProductQuantity, clearCart } from "./cart";
 
 export const store = createModel()({
   state: {
@@ -16,12 +17,16 @@ export const store = createModel()({
       totalPrice: 0,
     },
     cartOverlay: false,
+    currentCategory: "all",
   },
   reducers: {
     setCart,
     clearCart,
+    setCategory,
     setCurrency,
+    setAttributes,
     setCartOverlay,
+    setProductQuantity,
   },
 });
 
