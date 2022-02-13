@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import Button from "../Button/Button";
 import Heading from "../Heading/Heading";
@@ -7,10 +8,45 @@ import FlexContainer from "../FlexContainer/FlexContainer";
 import LessThanIcon from "../../../icons/LessThanIcon";
 import GreaterThanIcon from "../../../icons/GreaterThanIcon";
 
+import { store } from "../../../store";
+
 import * as S from "./CartOnPage.styles";
 
 class CartOnPage extends React.Component {
+  state = {
+    attributes: {},
+    attributeActive: null,
+  };
+
+  handleSelectedAttributes = (variation, item) => {
+    if (variation.type === "swatch") {
+      this.setState({
+        attributes: {
+          swatch: item.displayValue,
+          text:
+            (this.state.attributes.text && this.state.attributes.text) || null,
+        },
+      });
+    } else
+      this.setState({
+        attributes: {
+          swatch:
+            (this.state.attributes.swatch && this.state.attributes.swatch) ||
+            null,
+          text: item.displayValue,
+        },
+      });
+    console.log(this.state.attributes);
+  };
+
+  shouldComponentUpdate() {
+    return true;
+  }
+
   render() {
+    const { dispatch } = store;
+    const rootState = store.getState().store;
+
     return (
       <FlexContainer width="100%" justify="center">
         <FlexContainer margin="0" width="90%" align="center" direction="column">
@@ -25,167 +61,223 @@ class CartOnPage extends React.Component {
                 Cart
               </Heading>
             </FlexContainer>
-            <S.Wrapper width="100%" direction="column" margin="1rem 0 0 0">
-              <FlexContainer
-                margin="1rem 0"
-                tabletMinScreen={`
-                  height: 185px;
-              `}
+            {rootState.cart.products.map((product, index) => (
+              <S.Wrapper
+                key={index}
+                width="100%"
+                direction="column"
+                margin="1rem 0 0 0"
               >
-                <FlexContainer
-                  width="50%"
-                  justify="center"
-                  align="flex-start"
-                  direction="column"
-                >
-                  <Heading
-                    weight="300"
-                    size="1.15rem"
-                    margin="0.85rem 0 0 0"
-                    tabletMinScreen={`
+                <FlexContainer margin="0">
+                  <FlexContainer
+                    width="50%"
+                    justify="center"
+                    align="flex-start"
+                    direction="column"
+                  >
+                    <Heading
+                      weight="300"
+                      size="1.15rem"
+                      margin="0.85rem 0 0 0"
+                      tabletMinScreen={`
                       font-weight: 600;
                       font-size: 2.15rem;
                     `}
-                  >
-                    Apollo
-                  </Heading>
-                  <Heading
-                    margin="0"
-                    weight="300"
-                    size="1.15rem"
-                    tabletMinScreen={`
+                    >
+                      {product.brand}
+                    </Heading>
+                    <Heading
+                      margin="0"
+                      weight="300"
+                      size="1.15rem"
+                      tabletMinScreen={`
                       font-weight: 400;
                       font-size: 2.15rem;
                     `}
-                  >
-                    Running Short
-                  </Heading>
-                  <Heading
-                    size="1.15rem"
-                    weight="500"
-                    margin="0.85rem 0 0 0"
-                    tabletMinScreen={`
+                    >
+                      {product.name}
+                    </Heading>
+                    <Heading
+                      size="1.15rem"
+                      weight="500"
+                      margin="0.85rem 0 0 0"
+                      tabletMinScreen={`
                       font-weight: 700;
                       font-size: 1.72rem;
                     `}
-                  >
-                    $50.00
-                  </Heading>
-                  <FlexContainer width="100%" align="center">
-                    <FlexContainer margin="0" justify="flex-start">
-                      <Button
-                        width="24px"
-                        height="24px"
-                        fontSize="1rem"
-                        fontWeight="400"
-                        btnStyle="primary"
-                        tabletMinScreen={`
-                          width: 63px;
-                          height: 45px;
-                          font-size: 1.15rem;
-                        `}
-                      >
-                        S
-                      </Button>
-                      <Button
-                        width="24px"
-                        height="24px"
-                        fontSize="1rem"
-                        fontWeight="400"
-                        margin="0 0.6rem"
-                        btnStyle="primary"
-                        tabletMinScreen={`
-                          width: 63px;
-                          height: 45px;
-                          font-size: 1.15rem;
-                        `}
-                      >
-                        M
-                      </Button>
-                    </FlexContainer>
-                  </FlexContainer>
-                </FlexContainer>
-                <FlexContainer width="50%" align="center" justify="flex-end">
-                  <FlexContainer
-                    width="auto"
-                    align="center"
-                    direction="column"
-                    justify="space-between"
-                    styleProps={`height: 137px;`}
-                    tabletMinScreen={`
-                      height: 185px;
-                    `}
-                  >
-                    <Button
-                      width="24px"
-                      height="24px"
-                      fontSize="1rem"
-                      fontWeight="400"
-                      btnStyle="primary"
-                      tabletMinScreen={`
-                        width: 45px;
-                        height: 45px;
-                        font-size: 1.5rem;
-                      `}
-                      onClick={() => console.log("Hello")}
                     >
-                      +
-                    </Button>
-                    <Heading color="primary" size="1.15rem" weight="500">
-                      1
+                      {rootState.currency.symbol}
+                      {product.price}
                     </Heading>
-                    <Button
-                      width="24px"
-                      height="24px"
-                      fontSize="1rem"
-                      fontWeight="400"
-                      btnStyle="primary"
+                    <FlexContainer
+                      margin="0"
+                      width="100%"
+                      direction="column"
+                      align="flex-start"
+                    >
+                      {product.attributes.map((variation, index) => (
+                        <FlexContainer
+                          width="65%"
+                          key={index}
+                          margin="1rem 0"
+                          justify="space-between"
+                        >
+                          {variation.items.map((item, index) => (
+                            <Button
+                              key={index}
+                              width="24px"
+                              height="24px"
+                              fontSize="1rem"
+                              fontWeight="400"
+                              btnStyle={
+                                (product.selectedAttributes.text ===
+                                  item.displayValue &&
+                                  "secondary") ||
+                                (variation.type === "text" &&
+                                  this.state.attributes.text &&
+                                  this.state.attributes.text ===
+                                    item.displayValue &&
+                                  "secondary") ||
+                                "primary" ||
+                                "primary"
+                              }
+                              tabletMinScreen={`
+                                width: 63px;
+                                height: 45px;
+                                font-size: 1.15rem;
+                              `}
+                              styleProps={
+                                (product.selectedAttributes.swatch &&
+                                  product.selectedAttributes.swatch ===
+                                    item.displayValue &&
+                                  "border: 4px solid #d3d3d3;") ||
+                                (variation.type === "swatch" &&
+                                  this.state.attributes.swatch &&
+                                  this.state.attributes.swatch ===
+                                    item.displayValue &&
+                                  "border: 4px solid #d3d3d3;")
+                              }
+                              onClick={() => {
+                                product.selectedAttributes = {
+                                  swatch: item.displayValue,
+                                  text: item.displayValue,
+                                };
+                                this.handleSelectedAttributes(variation, item);
+
+                                dispatch.store.setAttributes({
+                                  ...product,
+                                  oldAttributes: product.selectedAttributes,
+                                  selectedAttributes: this.state.attributes,
+                                });
+                              }}
+                            >
+                              {(variation.type === "swatch" && (
+                                <div
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    background: item.value,
+                                  }}
+                                />
+                              )) ||
+                                item.displayValue}
+                            </Button>
+                          ))}
+                        </FlexContainer>
+                      ))}
+                    </FlexContainer>
+                  </FlexContainer>
+                  <FlexContainer width="50%" align="center" justify="flex-end">
+                    <FlexContainer
+                      width="auto"
+                      align="center"
+                      direction="column"
+                      justify="space-between"
+                      styleProps={`height: 137px;`}
                       tabletMinScreen={`
+                      height: 185px;
+                    `}
+                    >
+                      <Button
+                        width="24px"
+                        height="24px"
+                        fontSize="1rem"
+                        fontWeight="400"
+                        btnStyle="primary"
+                        tabletMinScreen={`
                         width: 45px;
                         height: 45px;
                         font-size: 1.5rem;
                       `}
-                      onClick={() => console.log("Hello")}
-                    >
-                      -
-                    </Button>
-                  </FlexContainer>
-                  <FlexContainer
-                    margin="0 0 0 1rem"
-                    tabletMinScreen={`
+                        onClick={() => {
+                          dispatch.store.setProductQuantity({
+                            id: product.name,
+                            operation: "increment",
+                            selectedAttributes: product.selectedAttributes,
+                          });
+                        }}
+                      >
+                        +
+                      </Button>
+                      <Heading color="primary" size="1.15rem" weight="500">
+                        {product.quantity}
+                      </Heading>
+                      <Button
+                        width="24px"
+                        height="24px"
+                        fontSize="1rem"
+                        fontWeight="400"
+                        btnStyle="primary"
+                        tabletMinScreen={`
+                        width: 45px;
+                        height: 45px;
+                        font-size: 1.5rem;
+                      `}
+                        onClick={() => {
+                          dispatch.store.setProductQuantity({
+                            id: product.name,
+                            operation: "decrement",
+                            selectedAttributes: product.selectedAttributes,
+                          });
+                        }}
+                      >
+                        -
+                      </Button>
+                    </FlexContainer>
+                    <FlexContainer
+                      margin="0 0 0 1rem"
+                      tabletMinScreen={`
                       height: 185px;
                     `}
-                  >
-                    <FlexContainer align="center" justify="center">
-                      <Button
-                        width="24px"
-                        height="24px"
-                        type="button"
-                        btnStyle="none"
-                        styleProps="position: relative; left: 24px;"
-                        onClick={() => console.log("Hello")}
-                      >
-                        <LessThanIcon width={24} height={24} />
-                      </Button>
-                      <S.Img
-                        alt="ProductOne"
-                        src="https://i.zst.com.br/thumbs/12/3e/2f/1340384387.jpg"
-                      />
-                      <Button
-                        width="24px"
-                        height="24px"
-                        type="button"
-                        btnStyle="none"
-                        styleProps="position: relative; right: 24px;"
-                        onClick={() => console.log("Hello")}
-                      >
-                        <GreaterThanIcon width={24} height={24} />
-                      </Button>
+                    >
+                      <FlexContainer align="center" justify="center">
+                        <Button
+                          width="24px"
+                          height="24px"
+                          type="button"
+                          btnStyle="none"
+                          styleProps="position: relative; left: 24px;"
+                          onClick={() => console.log("Hello")}
+                        >
+                          <LessThanIcon width={24} height={24} />
+                        </Button>
+                        <S.Img alt="ProductOne" src={product.gallery[0]} />
+                        <Button
+                          width="24px"
+                          height="24px"
+                          type="button"
+                          btnStyle="none"
+                          styleProps="position: relative; right: 24px;"
+                          onClick={() => console.log("Hello")}
+                        >
+                          <GreaterThanIcon width={24} height={24} />
+                        </Button>
+                      </FlexContainer>
                     </FlexContainer>
                   </FlexContainer>
                 </FlexContainer>
-              </FlexContainer>
-            </S.Wrapper>
+              </S.Wrapper>
+            ))}
           </FlexContainer>
           {this.props.children}
         </FlexContainer>
@@ -194,4 +286,13 @@ class CartOnPage extends React.Component {
   }
 }
 
-export default CartOnPage;
+const mapState = (state) => ({
+  store: state.store,
+});
+
+const mapDispatch = (dispatch) => ({
+  setCart: dispatch.store.setCart,
+  setAttributes: dispatch.store.setAttributes,
+});
+
+export default connect(mapState, mapDispatch)(CartOnPage);
