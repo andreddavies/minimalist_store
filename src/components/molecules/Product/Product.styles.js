@@ -17,12 +17,15 @@ const ImageWrapper = styled.div`
   max-height: 200px;
 
   & > img {
-    width: 100%;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    max-height: 511px;
   }
 
   @media screen and (min-width: 768px) {
     width: 80%;
-    max-height: none;
+    max-height: 511px;
   }
 `;
 
@@ -32,15 +35,19 @@ const SmallImagesWrapper = styled.div`
   display: flex;
   overflow-x: scroll;
   margin-top: 0.75rem;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
   & > img {
+    width: 80px;
     height: 100%;
-    max-width: 80px;
+    cursor: pointer;
     max-height: 80px;
+    margin-left: 20px;
+    ${(props) => props.selected && "border: 5px solid #CCC"};
 
     @media screen and (min-width: 768px) {
       width: 100%;
+      margin-left: 0;
       margin-bottom: 1.28rem;
     }
   }
