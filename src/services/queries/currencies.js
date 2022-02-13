@@ -1,8 +1,8 @@
-import { dataConfig } from "../dataConfig";
+import { apiConfig } from "../apiConfig";
 import { gql } from "@apollo/client";
 
 const GET_CURRENCIES = async () => {
-  return await dataConfig.query({
+  return await apiConfig.query({
     query: gql`
       query {
         currencies {

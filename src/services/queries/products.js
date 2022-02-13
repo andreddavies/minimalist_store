@@ -1,8 +1,8 @@
-import { dataConfig } from "../dataConfig";
+import { apiConfig } from "../apiConfig";
 import { gql } from "@apollo/client";
 
 const GET_PRODUCT = async (id) => {
-  return await dataConfig.query({
+  return await apiConfig.query({
     query: gql`
         query{
             product(id: "${id}"){
@@ -37,7 +37,7 @@ const GET_PRODUCT = async (id) => {
 };
 
 const GET_PRODUCTS = async () => {
-  return await dataConfig.query({
+  return await apiConfig.query({
     query: gql`
       query {
         category {
