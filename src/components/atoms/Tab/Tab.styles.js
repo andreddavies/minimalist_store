@@ -3,6 +3,7 @@ import styled from "styled-components";
 const TabContainer = styled.div`
   height: 100%;
   display: flex;
+  cursor: pointer;
   align-items: center;
   justify-content: center;
   border-bottom: ${({ isActive }) =>

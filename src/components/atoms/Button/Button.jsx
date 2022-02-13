@@ -2,7 +2,7 @@ import React from "react";
 
 import * as S from "./Button.styles";
 
-class Button extends React.PureComponent {
+class Button extends React.Component {
   render() {
     return (
       <S.Button
