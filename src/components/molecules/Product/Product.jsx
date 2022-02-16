@@ -50,7 +50,6 @@ class Product extends React.Component {
         },
       });
   };
-
   render() {
     const { dispatch } = store;
     const rootState = store.getState().store;
@@ -200,18 +199,15 @@ class Product extends React.Component {
                 btnStyle="tertiary"
                 onClick={() => {
                   if (
-                    //set a better way
-                    !this.state.attributes.swatch ||
-                    !this.state.attributes.text
+                    this.state.attributes.swatch ||
+                    this.state.attributes.text
                   ) {
-                    alert("Select product variations to add!");
-                    return;
-                  }
-
-                  handleAddToCart({
-                    ...this.state.productData,
-                    selectedAttributes: this.state.attributes,
-                  });
+                    handleAddToCart({
+                      ...this.state.productData,
+                      selectedAttributes: this.state.attributes,
+                    });
+                  } else alert("Select product variations to add!");
+                  return;
                 }}
               >
                 ADD TO CART
