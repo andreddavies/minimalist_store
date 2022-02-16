@@ -1,4 +1,5 @@
 const setCart = (state, payload) => {
+  if (!payload.product.inStock) return alert("OUT OF STOCK");
   return {
     ...state,
     cart: {
