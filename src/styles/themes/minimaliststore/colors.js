@@ -14,6 +14,7 @@ export const colors = {
   heading: {
     primary: "#1D1F22",
     secondary: "#FFF",
+    tertiary: "#8D8F9A",
   },
 
   buttons: {
