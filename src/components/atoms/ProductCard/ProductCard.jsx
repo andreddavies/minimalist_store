@@ -59,6 +59,18 @@ class ProductCard extends React.Component {
                 styleProps="padding: 16px"
               >
                 <S.ImageWrapper inStock={element.inStock}>
+                  {!element.inStock && (
+                    <S.ImageOverflow>
+                      <Heading
+                        margin="0"
+                        size="24px"
+                        weight="400"
+                        color="tertiary"
+                      >
+                        OUT OF STOCK
+                      </Heading>
+                    </S.ImageOverflow>
+                  )}
                   <img alt={element.name} src={element.gallery[0]} />
                   <S.IconWrapper
                     onClick={(e) => {

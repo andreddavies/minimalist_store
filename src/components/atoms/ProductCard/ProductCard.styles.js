@@ -10,6 +10,21 @@ const List = styled.ul`
   justify-content: space-evenly;
 `;
 
+const IconWrapper = styled.div`
+  top: -26px;
+  right: -70%;
+  width: 60px;
+  height: 60px;
+  z-index: 9999;
+  display: flex;
+  position: relative;
+  justify-content: flex-end;
+
+  & > svg {
+    display: none;
+  }
+`;
+
 const ListItem = styled.li`
   width: 40%;
   margin: 50px 0;
@@ -22,6 +37,12 @@ const ListItem = styled.li`
     filter: drop-shadow(
       0px 4px 35px ${({ theme }) => theme.colors.productCard.cardShadow}
     );
+
+    ${IconWrapper} {
+      & > svg {
+        display: flex;
+      }
+    }
   }
 
   @media screen and (min-width: 768px) {
@@ -40,14 +61,17 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const IconWrapper = styled.div`
-  top: -26px;
-  right: -70%;
-  width: 60px;
-  height: 60px;
+const ImageOverflow = styled.div`
+  width: 100%;
+  height: 100%;
+  z-index: 999;
   display: flex;
-  position: relative;
-  justify-content: flex-end;
+  max-width: 310px;
+  max-height: 330px;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  background: rgba(250, 250, 250, 0.5);
 `;
 
 const ProductInfoWrapper = styled.div`
@@ -92,5 +116,6 @@ export {
   IconWrapper,
   ImageWrapper,
   PriceWrapper,
+  ImageOverflow,
   ProductInfoWrapper,
 };
