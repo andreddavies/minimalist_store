@@ -9,6 +9,7 @@ import LessThanIcon from "../../../icons/LessThanIcon";
 import GreaterThanIcon from "../../../icons/GreaterThanIcon";
 
 import { store } from "../../../store";
+import getProductTotalPrice from "../../../plugins/getProductTotalPrice";
 
 import * as S from "./CartOnPage.styles";
 
@@ -18,34 +19,34 @@ class CartOnPage extends React.Component {
     attributeActive: null,
   };
 
-  handleSelectedAttributes = (variation, item) => {
-    if (variation.type === "swatch") {
-      this.setState({
-        attributes: {
-          swatch: item.displayValue,
-          text:
-            (this.state.attributes.text && this.state.attributes.text) || null,
-        },
-      });
-    } else
-      this.setState({
-        attributes: {
-          swatch:
-            (this.state.attributes.swatch && this.state.attributes.swatch) ||
-            null,
-          text: item.displayValue,
-        },
-      });
-    console.log(this.state.attributes);
-  };
-
-  shouldComponentUpdate() {
-    return true;
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state !== nextState || this.state.attributes !== nextState;
   }
 
   render() {
     const { dispatch } = store;
     const rootState = store.getState().store;
+
+    const handleSelectedAttributes = (variation, item) => {
+      if (variation.type === "swatch") {
+        this.setState({
+          attributes: {
+            swatch: item.displayValue,
+            text:
+              (this.state.attributes.text && this.state.attributes.text) ||
+              null,
+          },
+        });
+      } else
+        this.setState({
+          attributes: {
+            swatch:
+              (this.state.attributes.swatch && this.state.attributes.swatch) ||
+              null,
+            text: item.displayValue,
+          },
+        });
+    };
 
     return (
       <FlexContainer width="100%" justify="center">
@@ -61,6 +62,13 @@ class CartOnPage extends React.Component {
                 Cart
               </Heading>
             </FlexContainer>
+            {rootState.cart.products.length === 0 && (
+              <FlexContainer margin="0" width="100%" justify="center">
+                <Heading color="primary" size="3rem" weight="400">
+                  Cart is empty!
+                </Heading>
+              </FlexContainer>
+            )}
             {rootState.cart.products.map((product, index) => (
               <S.Wrapper
                 key={index}
@@ -106,8 +114,7 @@ class CartOnPage extends React.Component {
                       font-size: 1.72rem;
                     `}
                     >
-                      {rootState.currency.symbol}
-                      {product.price}
+                      {getProductTotalPrice(product)}
                     </Heading>
                     <FlexContainer
                       margin="0"
@@ -142,7 +149,7 @@ class CartOnPage extends React.Component {
                                 "primary"
                               }
                               tabletMinScreen={`
-                                width: 63px;
+                                width: 68px;
                                 height: 45px;
                                 font-size: 1.15rem;
                               `}
@@ -158,17 +165,26 @@ class CartOnPage extends React.Component {
                                   "border: 4px solid #d3d3d3;")
                               }
                               onClick={() => {
-                                product.selectedAttributes = {
-                                  swatch: item.displayValue,
-                                  text: item.displayValue,
-                                };
-                                this.handleSelectedAttributes(variation, item);
+                                handleSelectedAttributes(variation, item);
 
-                                dispatch.store.setAttributes({
-                                  ...product,
-                                  oldAttributes: product.selectedAttributes,
-                                  selectedAttributes: this.state.attributes,
-                                });
+                                if (variation.type === "text") {
+                                  dispatch.store.setAttributes({
+                                    ...product,
+                                    oldAttributes: product.selectedAttributes,
+                                    selectedAttributes: {
+                                      text: item.displayValue,
+                                      swatch: product.selectedAttributes.swatch,
+                                    },
+                                  });
+                                } else
+                                  dispatch.store.setAttributes({
+                                    ...product,
+                                    oldAttributes: product.selectedAttributes,
+                                    selectedAttributes: {
+                                      swatch: item.displayValue,
+                                      text: product.selectedAttributes.text,
+                                    },
+                                  });
                               }}
                             >
                               {(variation.type === "swatch" && (
@@ -211,7 +227,7 @@ class CartOnPage extends React.Component {
                       `}
                         onClick={() => {
                           dispatch.store.setProductQuantity({
-                            id: product.name,
+                            id: product.id,
                             operation: "increment",
                             selectedAttributes: product.selectedAttributes,
                           });
@@ -235,7 +251,7 @@ class CartOnPage extends React.Component {
                       `}
                         onClick={() => {
                           dispatch.store.setProductQuantity({
-                            id: product.name,
+                            id: product.id,
                             operation: "decrement",
                             selectedAttributes: product.selectedAttributes,
                           });
