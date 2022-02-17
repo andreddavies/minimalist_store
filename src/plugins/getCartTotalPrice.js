@@ -1,7 +1,7 @@
 import { price } from "./masks";
 import { store } from "../store";
 
-const getTotalPrice = () => {
+const getCartTotalPrice = () => {
   const rootState = store.getState().store;
 
   const prices = rootState.cart.products.map((el) => {
@@ -24,4 +24,4 @@ const getTotalPrice = () => {
   );
 };
 
-export default getTotalPrice;
+export default getCartTotalPrice;
