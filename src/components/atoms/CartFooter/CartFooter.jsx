@@ -6,7 +6,7 @@ import Heading from "../Heading/Heading";
 import FlexContainer from "../FlexContainer/FlexContainer";
 
 import { store } from "../../../store";
-import getTotalPrice from "../../../plugins/getTotalPrice";
+import getCartTotalPrice from "../../../plugins/getCartTotalPrice";
 
 class CartFooter extends React.Component {
   shouldComponentUpdate() {
@@ -40,7 +40,7 @@ class CartFooter extends React.Component {
             color="primary"
             margin="0 0 0 1rem"
           >
-            {getTotalPrice()}
+            {getCartTotalPrice()}
           </Heading>
         </FlexContainer>
         <FlexContainer
