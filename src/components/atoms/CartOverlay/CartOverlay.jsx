@@ -6,7 +6,7 @@ import Heading from "../Heading/Heading";
 import FlexContainer from "../FlexContainer/FlexContainer";
 
 import { store } from "../../../store";
-import { price } from "../../../plugins/masks";
+import getProductTotalPrice from "../../../plugins/getProductTotalPrice";
 
 import * as S from "./CartOverlay.styles";
 
@@ -15,24 +15,6 @@ class CartOverlay extends React.Component {
     const { dispatch } = store;
     const rootState = store.getState().store;
 
-    const getProductPrice = (product) => {
-      const prices = () => {
-        if (product.quantity > 1) {
-          return (
-            product.prices.find((price) => {
-              return price.currency.label === rootState.currency.label;
-            }).amount * product.quantity
-          );
-        }
-        return product.prices.find((price) => {
-          return price.currency.label === rootState.currency.label;
-        }).amount;
-      };
-      const totalPrice = prices();
-
-      return price(totalPrice)[rootState.currency.label]();
-    };
-
     return (
       <FlexContainer
         width="100%"
@@ -40,7 +22,7 @@ class CartOverlay extends React.Component {
         styleProps={`
             right: 0;
             top: 64px;
-            z-index: 999;
+            z-index: 999999;
             background: #fff;
             position: absolute;
             height: ${rootState.cart.products.length > 0 && "70%"};
@@ -106,7 +88,7 @@ class CartOverlay extends React.Component {
                           size="1.15rem"
                           weight="500"
                         >
-                          {getProductPrice(product)}
+                          {getProductTotalPrice(product)}
                         </Heading>
                         <FlexContainer width="100%" align="center">
                           <FlexContainer margin="0" justify="flex-start">
