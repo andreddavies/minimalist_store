@@ -5,6 +5,7 @@ const Select = styled.select`
   width: 85px;
   height: 30px;
   margin: 0.75rem;
+  cursor: pointer;
   background: none;
   font-size: ${({ theme }) => theme.text.size.text18};
   font-weight: ${({ theme }) => theme.text.weight.medium};
