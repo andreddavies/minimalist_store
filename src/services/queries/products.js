@@ -55,6 +55,14 @@ const GET_PRODUCTS = async () => {
                 symbol
               }
             }
+            attributes {
+              type
+              items {
+                id
+                value
+                displayValue
+              }
+            }
           }
         }
       }
