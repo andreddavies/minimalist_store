@@ -27,6 +27,15 @@ class CartOverlay extends React.Component {
             position: absolute;
             height: ${rootState.cart.products.length > 0 && "70%"};
             overflow-y: ${rootState.cart.products.length > 0 && "scroll"};
+            ::-o-scrollbar {
+              display: none;
+            }
+            ::-moz-scrollbar {
+              display: none;
+            }
+            ::-webkit-scrollbar {
+              display: none;
+            }
         `}
         tabletMinScreen={`
             right: 200px;
@@ -91,26 +100,41 @@ class CartOverlay extends React.Component {
                           {getProductTotalPrice(product)}
                         </Heading>
                         <FlexContainer width="100%" align="center">
-                          <FlexContainer margin="0" justify="flex-start">
-                            <Button
-                              width="24px"
-                              height="24px"
-                              fontSize="1rem"
-                              fontWeight="400"
-                              btnStyle="primary"
-                            >
-                              S
-                            </Button>
-                            <Button
-                              width="24px"
-                              height="24px"
-                              margin="0 0.6rem"
-                              fontSize="1rem"
-                              fontWeight="400"
-                              btnStyle="primary"
-                            >
-                              M
-                            </Button>
+                          <FlexContainer margin="0">
+                            {product.selectedAttributes.swatch !== undefined &&
+                              product.selectedAttributes.swatch && (
+                                <Button
+                                  width="45px"
+                                  height="45px"
+                                  fontSize="1rem"
+                                  btnStyle="none"
+                                  fontWeight="400"
+                                  margin="0 10px 0 0"
+                                  styleProps="cursor: default;"
+                                >
+                                  <div
+                                    style={{
+                                      width: "100%",
+                                      height: "100%",
+                                      background:
+                                        product.selectedAttributes.swatch,
+                                    }}
+                                  />
+                                </Button>
+                              )}
+                            {product.selectedAttributes.text !== undefined &&
+                              product.selectedAttributes.text && (
+                                <Button
+                                  width="45px"
+                                  height="45px"
+                                  fontSize="1rem"
+                                  fontWeight="400"
+                                  btnStyle="secondary"
+                                  styleProps="cursor: default;"
+                                >
+                                  {product.selectedAttributes.text}
+                                </Button>
+                              )}
                           </FlexContainer>
                         </FlexContainer>
                       </FlexContainer>
