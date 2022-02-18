@@ -76,7 +76,10 @@ class ProductCard extends React.Component {
                     onClick={(e) => {
                       e.preventDefault();
 
-                      handleAddToCart({ ...element });
+                      handleAddToCart({
+                        ...element,
+                        selectedAttributes: { text: null, swatch: null },
+                      });
                     }}
                   >
                     <CartIcon width={52} height={52} />
