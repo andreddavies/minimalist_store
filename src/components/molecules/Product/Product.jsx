@@ -198,16 +198,22 @@ class Product extends React.Component {
                 fontSize="1.15rem"
                 btnStyle="tertiary"
                 onClick={() => {
-                  if (
-                    this.state.attributes.swatch ||
-                    this.state.attributes.text
-                  ) {
+                  if (this.state.productData.attributes.length > 0) {
+                    if (
+                      this.state.attributes.swatch ||
+                      this.state.attributes.text
+                    ) {
+                      handleAddToCart({
+                        ...this.state.productData,
+                        selectedAttributes: this.state.attributes,
+                      });
+                    } else alert("Select product variations to add!");
+                    return;
+                  } else
                     handleAddToCart({
                       ...this.state.productData,
                       selectedAttributes: this.state.attributes,
                     });
-                  } else alert("Select product variations to add!");
-                  return;
                 }}
               >
                 ADD TO CART
