@@ -16,7 +16,11 @@ class Tab extends React.Component {
         onClick={this.props.onClick}
         isActive={this.props.isActive}
       >
-        <Paragraph color="tertiary" weight="semiBold" size="text16">
+        <Paragraph
+          size="text16"
+          weight="semiBold"
+          color={(this.props.isActive && "tertiary") || "secondary"}
+        >
           {this.props.text}
         </Paragraph>
       </S.TabContainer>
