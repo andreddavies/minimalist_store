@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import Button from "../Button/Button";
 import Heading from "../Heading/Heading";
@@ -8,6 +7,8 @@ import FlexContainer from "../FlexContainer/FlexContainer";
 import { store } from "../../../store";
 import getCartTotalPrice from "../../../plugins/getCartTotalPrice";
 
+import * as S from "./CartFooter.styles";
+
 class CartFooter extends React.Component {
   shouldComponentUpdate() {
     return true;
@@ -15,12 +16,12 @@ class CartFooter extends React.Component {
 
   render() {
     const { dispatch } = store;
+    const rootState = store.getState().store;
 
     return (
-      <FlexContainer
-        width="100%"
-        direction="column"
-        tabletMinScreen={this.props.setToBottom}
+      <S.CartFooterContainer
+        isCartOverlay={this.props.cartOverlay}
+        cartLength={rootState.cart.products.length}
       >
         <FlexContainer
           width="100%"
@@ -62,18 +63,12 @@ class CartFooter extends React.Component {
               ${!this.props.cartOverlay && "display: none"}
             `}
           >
-            <Link
+            <S.StyledLink
               to="/cart"
-              style={{
-                width: "100%",
-                height: "100%",
-                color: "inherit",
-                textDecoration: "none",
-              }}
               onClick={() => dispatch.store.setCartOverlay(false)}
             >
               VIEW BAG
-            </Link>
+            </S.StyledLink>
           </Button>
           <Button
             width="40%"
@@ -86,7 +81,7 @@ class CartFooter extends React.Component {
               width: 130px;
             `}
           >
-            <Link
+            <S.StyledLink
               to="/successfulPurchase"
               style={{
                 width: "100%",
@@ -97,10 +92,10 @@ class CartFooter extends React.Component {
               onClick={() => dispatch.store.setCartOverlay(false)}
             >
               CHECK OUT
-            </Link>
+            </S.StyledLink>
           </Button>
         </FlexContainer>
-      </FlexContainer>
+      </S.CartFooterContainer>
     );
   }
 }
