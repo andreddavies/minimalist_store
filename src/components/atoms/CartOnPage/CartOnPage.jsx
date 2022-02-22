@@ -9,7 +9,7 @@ import LessThanIcon from "../../../icons/LessThanIcon";
 import GreaterThanIcon from "../../../icons/GreaterThanIcon";
 
 import { store } from "../../../store";
-import getProductTotalPrice from "../../../plugins/getProductTotalPrice";
+import { price } from "../../../plugins/masks";
 
 import * as S from "./CartOnPage.styles";
 
@@ -26,6 +26,13 @@ class CartOnPage extends React.Component {
   render() {
     const { dispatch } = store;
     const rootState = store.getState().store;
+
+    const productPrice = (product) =>
+      price(
+        product.prices.find((el) => {
+          return el.currency.label === rootState.currency.label;
+        }).amount
+      )[rootState.currency.label]();
 
     const handleSelectedAttributes = (variation, item) => {
       if (variation.type === "swatch") {
@@ -114,7 +121,7 @@ class CartOnPage extends React.Component {
                       font-size: 1.72rem;
                     `}
                     >
-                      {getProductTotalPrice(product)}
+                      {productPrice(product)}
                     </Heading>
                     <FlexContainer
                       margin="0"
