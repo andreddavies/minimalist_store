@@ -6,7 +6,7 @@ import Heading from "../Heading/Heading";
 import FlexContainer from "../FlexContainer/FlexContainer";
 
 import { store } from "../../../store";
-import getProductTotalPrice from "../../../plugins/getProductTotalPrice";
+import { price } from "../../../plugins/masks";
 
 import * as S from "./CartOverlay.styles";
 
@@ -14,6 +14,13 @@ class CartOverlay extends React.Component {
   render() {
     const { dispatch } = store;
     const rootState = store.getState().store;
+
+    const productPrice = (product) =>
+      price(
+        product.prices.find((el) => {
+          return el.currency.label === rootState.currency.label;
+        }).amount
+      )[rootState.currency.label]();
 
     return (
       <FlexContainer
@@ -97,7 +104,7 @@ class CartOverlay extends React.Component {
                           size="1.15rem"
                           weight="500"
                         >
-                          {getProductTotalPrice(product)}
+                          {productPrice(product)}
                         </Heading>
                         <FlexContainer width="100%" align="center">
                           <FlexContainer margin="0">
