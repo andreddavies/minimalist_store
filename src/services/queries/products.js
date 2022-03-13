@@ -36,38 +36,45 @@ const GET_PRODUCT = async (id) => {
   });
 };
 
-const GET_PRODUCTS = async () => {
-  return await apiConfig.query({
-    query: gql`
-      query {
-        category {
-          products {
-            id
-            name
-            brand
-            inStock
-            gallery
-            category
-            prices {
-              amount
-              currency {
-                label
-                symbol
+const GET_PRODUCTS = (category) => {
+  return apiConfig
+    .query({
+      query: gql`
+        query ($categoryName: String!) {
+          category(input: { title: $categoryName }) {
+            products {
+              id
+              name
+              brand
+              inStock
+              gallery
+              category
+              prices {
+                amount
+                currency {
+                  label
+                  symbol
+                }
               }
-            }
-            attributes {
-              type
-              items {
-                id
-                value
-                displayValue
+              attributes {
+                type
+                items {
+                  id
+                  value
+                  displayValue
+                }
               }
             }
           }
         }
-      }
-    `,
-  });
+      `,
+      variables: {
+        categoryName: category,
+      },
+    })
+    .then((result) => {
+      return result.data;
+    });
 };
 
 export { GET_PRODUCT, GET_PRODUCTS };
