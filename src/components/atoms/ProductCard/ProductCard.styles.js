@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-const Container = styled.div``;
-
-const List = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 80px;
-  list-style-type: none;
-  justify-content: space-evenly;
-`;
-
 const IconWrapper = styled.div`
   top: -26px;
   right: -70%;
@@ -25,7 +15,7 @@ const IconWrapper = styled.div`
   }
 `;
 
-const ListItem = styled.li`
+const ProductItem = styled.li`
   width: 40%;
   margin: 50px 0;
   cursor: pointer;
@@ -47,7 +37,8 @@ const ListItem = styled.li`
 
   @media screen and (min-width: 768px) {
     width: 30%;
-    margin: 100px 0;
+    max-width: none;
+    margin: 40px 1.66%;
   }
 `;
 
@@ -58,6 +49,7 @@ const ImageWrapper = styled.div`
   & > img {
     width: 100%;
     max-height: 330px;
+    object-fit: contain;
   }
 `;
 
@@ -109,10 +101,8 @@ const PriceWrapper = styled.div`
 `;
 
 export {
-  List,
   Title,
-  ListItem,
-  Container,
+  ProductItem,
   IconWrapper,
   ImageWrapper,
   PriceWrapper,
