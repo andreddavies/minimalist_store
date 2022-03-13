@@ -2,23 +2,48 @@ import React from "react";
 import { connect } from "react-redux";
 import { store } from "../../../store";
 
-import * as S from "./ProductList.styles";
 import ProductCard from "../../atoms/ProductCard/ProductCard";
 
-class ProductList extends React.Component {
-  render() {
-    const rootState = store.getState().store;
+import { GET_PRODUCTS } from "../../../services/queries/products";
 
+import * as S from "./ProductList.styles";
+
+class ProductList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      productsList: [],
+    };
+  }
+
+  getProducts = async (reqParam) => {
+    try {
+      const data = await GET_PRODUCTS(reqParam);
+
+      this.setState({ productsList: data.category.products });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  componentDidMount() {
+    console.log(this.props.currentCategory);
+    this.getProducts(this.props.currentCategory);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.currentCategory !== this.props.currentCategory)
+      this.getProducts(this.props.currentCategory);
+  }
+
+  render() {
     return (
       <S.Container>
         <S.List>
-          {(rootState.currentCategory !== "all" && (
-            <ProductCard
-              products={this.props.products.filter(
-                (el) => el.category === rootState.currentCategory
-              )}
-            />
-          )) || <ProductCard products={this.props.products} />}
+          {this.state.productsList.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </S.List>
       </S.Container>
     );
@@ -26,7 +51,7 @@ class ProductList extends React.Component {
 }
 
 const mapState = (state) => ({
-  store: state.store,
+  currentCategory: state.store.currentCategory,
 });
 
 export default connect(mapState, null)(ProductList);
