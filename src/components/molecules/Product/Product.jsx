@@ -1,4 +1,5 @@
 import React from "react";
+import parse from "html-react-parser";
 
 import { GET_PRODUCT } from "../../../services/queries/products";
 
@@ -51,6 +52,7 @@ class Product extends React.Component {
       });
   };
   render() {
+    console.log(this.state);
     const { dispatch } = store;
     const rootState = store.getState().store;
 
@@ -218,11 +220,9 @@ class Product extends React.Component {
               >
                 ADD TO CART
               </Button>
-              <S.Paragraph
-                dangerouslySetInnerHTML={{
-                  __html: this.state.productData.description,
-                }}
-              />
+              <S.Paragraph>
+                {parse(`${this.state.productData.description}`)}
+              </S.Paragraph>
             </FlexContainer>
           </FlexContainer>
         </S.ProductDetailsContainer>
