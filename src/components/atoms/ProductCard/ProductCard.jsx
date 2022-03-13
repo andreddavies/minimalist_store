@@ -16,6 +16,8 @@ class ProductCard extends React.Component {
     const { dispatch } = store;
     const rootState = store.getState().store;
 
+    const { product } = this.props;
+
     const handleAddToCart = (payload) => {
       const dataToDispatch = {
         product: {
@@ -46,66 +48,54 @@ class ProductCard extends React.Component {
     };
 
     return (
-      <>
-        {this.props.products.map((element, index) => (
-          <S.ListItem key={index}>
-            <Link
-              to={`/product/${element.id}`}
-              style={{ textDecoration: "none" }}
-            >
-              <FlexContainer
-                width="100%"
-                direction="column"
-                styleProps="padding: 16px"
-              >
-                <S.ImageWrapper inStock={element.inStock}>
-                  {!element.inStock && (
-                    <S.ImageOverflow>
-                      <Heading
-                        margin="0"
-                        size="24px"
-                        weight="400"
-                        color="tertiary"
-                      >
-                        OUT OF STOCK
-                      </Heading>
-                    </S.ImageOverflow>
-                  )}
-                  <img alt={element.name} src={element.gallery[0]} />
-                  <S.IconWrapper
-                    onClick={(e) => {
-                      e.preventDefault();
-
-                      handleAddToCart({
-                        ...element,
-                        selectedAttributes: { text: null, swatch: null },
-                      });
-                    }}
-                  >
-                    <CartIcon width={52} height={52} />
-                  </S.IconWrapper>
-                </S.ImageWrapper>
-                <S.ProductInfoWrapper>
-                  <Heading color="primary" size="18px" weight="300">
-                    {`${element.brand}
-                      ${element.name}`}
+      <S.ProductItem>
+        <Link to={`/product/${product.id}`} style={{ textDecoration: "none" }}>
+          <FlexContainer
+            width="100%"
+            direction="column"
+            styleProps="padding: 16px"
+          >
+            <S.ImageWrapper inStock={product.inStock}>
+              {!product.inStock && (
+                <S.ImageOverflow>
+                  <Heading margin="0" size="24px" weight="400" color="tertiary">
+                    OUT OF STOCK
                   </Heading>
-                  <S.PriceWrapper inStock={element.inStock}>
-                    <Paragraph color="secondary" size="18px" weight="500">
-                      {rootState.currency.symbol}
-                      {
-                        element.prices.find(
-                          (el) => el.currency.label === rootState.currency.label
-                        ).amount
-                      }
-                    </Paragraph>
-                  </S.PriceWrapper>
-                </S.ProductInfoWrapper>
-              </FlexContainer>
-            </Link>
-          </S.ListItem>
-        ))}
-      </>
+                </S.ImageOverflow>
+              )}
+              <img alt={product.name} src={product.gallery[0]} />
+              <S.IconWrapper
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  handleAddToCart({
+                    ...product,
+                    selectedAttributes: { text: null, swatch: null },
+                  });
+                }}
+              >
+                <CartIcon width={52} height={52} />
+              </S.IconWrapper>
+            </S.ImageWrapper>
+            <S.ProductInfoWrapper>
+              <Heading color="primary" size="18px" weight="300">
+                {`${product.brand}
+                      ${product.name}`}
+              </Heading>
+              <S.PriceWrapper inStock={product.inStock}>
+                <Paragraph color="secondary" size="18px" weight="500">
+                  {rootState.currency.symbol}
+                  {
+                    product.prices.find(
+                      (el) => el.currency.label === rootState.currency.label
+                    ).amount
+                  }
+                </Paragraph>
+              </S.PriceWrapper>
+            </S.ProductInfoWrapper>
+          </FlexContainer>
+        </Link>
+      </S.ProductItem>
     );
   }
 }
