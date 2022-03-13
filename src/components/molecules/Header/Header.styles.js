@@ -4,7 +4,12 @@ const HeaderContainer = styled.header`
   width: 100%;
   height: 80px;
   display: flex;
-  align-items: center;
+  justify-content: center;
+`;
+
+const CenterWrapper = styled.div`
+  width: 85%;
+  display: flex;
   justify-content: space-between;
 `;
 
@@ -43,4 +48,4 @@ const Image = styled.img`
   height: 41px;
 `;
 
-export { HeaderContainer, Box, CartQuantity, Image };
+export { HeaderContainer, CenterWrapper, Box, CartQuantity, Image };

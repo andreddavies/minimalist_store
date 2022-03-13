@@ -82,7 +82,7 @@ const Title = styled.h3`
   }
 `;
 
-const Paragraph = styled.p`
+const Paragraph = styled.div`
   font-size: 16px;
   font-weight: 400;
   text-align: justify;
