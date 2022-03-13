@@ -5,27 +5,10 @@ import ProductList from "../../../components/molecules/ProductList/ProductList";
 import PagesContainer from "../../../components/organisms/PagesContainer/PagesContainer";
 
 import { store } from "../../../store";
-import { GET_PRODUCTS } from "../../../services/queries/products";
 
 import * as S from "./CategoryPage.styles";
 
 class CategoryPage extends React.Component {
-  state = {
-    productsList: [],
-  };
-
-  componentDidMount() {
-    GET_PRODUCTS().then((result) => {
-      this.setState({
-        productsList: result.data.category.products,
-      });
-    });
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state !== nextState || store.getState().store.currentCategory;
-  }
-
   render() {
     const rootState = store.getState().store;
 
@@ -34,7 +17,7 @@ class CategoryPage extends React.Component {
         <S.TitleWrapper>
           {rootState.currentCategory.toUpperCase()}
         </S.TitleWrapper>
-        <ProductList products={this.state.productsList} />
+        <ProductList />
       </PagesContainer>
     );
   }
