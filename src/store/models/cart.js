@@ -1,5 +1,5 @@
 const setCart = (state, payload) => {
-  if (!payload.product.inStock) {
+  if (!payload.inStock) {
     alert("OUT OF STOCK");
     return { ...state };
   }
@@ -10,7 +10,7 @@ const setCart = (state, payload) => {
       quantity: (state.cart.quantity += 1),
       products: [
         ...state.cart.products,
-        { ...payload.product, quantity: payload.quantity },
+        { ...payload, quantity: payload.quantity },
       ],
     },
   };
@@ -35,9 +35,13 @@ const setProductQuantity = (state, payload) => {
   const product = state.cart.products.find((product) => {
     return (
       product.id === payload.id &&
-      product.selectedAttributes === payload.selectedAttributes
+      product.selectedAttributes.text.join(
+        product.selectedAttributes.swatch
+      ) ===
+        payload.selectedAttributes.text.join(payload.selectedAttributes.swatch)
     );
   });
+
   const indexOfProduct = state.cart.products.findIndex((product) => {
     return (
       product.id === payload.id &&
