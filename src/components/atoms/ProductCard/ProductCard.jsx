@@ -7,44 +7,54 @@ import CartIcon from "../../../icons/AddToCartIcon";
 import Paragraph from "../../atoms/Paragraph/Paragraph";
 import FlexContainer from "../../atoms/FlexContainer/FlexContainer";
 
-import { store } from "../../../store";
-
 import * as S from "./ProductCard.styles";
 
 class ProductCard extends React.Component {
   render() {
-    const { dispatch } = store;
-    const rootState = store.getState().store;
+    const { cart, product, currency, setCart, setProductQuantity } = this.props;
 
-    const { product } = this.props;
-
-    const handleAddToCart = (payload) => {
-      const dataToDispatch = {
-        product: {
-          id: payload.id,
-          name: payload.name,
-          brand: payload.brand,
-          prices: payload.prices,
-          inStock: payload.inStock,
-          gallery: payload.gallery,
-          attributes: payload.attributes,
-          selectedAttributes: payload.selectedAttributes,
-        },
+    const handleAddToCart = () => {
+      const productData = {
+        id: product.id,
+        name: product.name,
+        brand: product.brand,
+        prices: product.prices,
+        inStock: product.inStock,
+        gallery: product.gallery,
+        attributes: product.attributes,
+        selectedAttributes: handleSelectedAttributes(),
       };
-      const product = rootState.cart.products.find((product) => {
+
+      const equalProduct = cart.products.find((element) => {
         return (
-          product.id === payload.id &&
-          product.selectedAttributes === payload.selectedAttributes
+          element.id === productData.id &&
+          element.selectedAttributes.text.join(
+            element.selectedAttributes.swatch
+          ) ===
+            productData.selectedAttributes.text.join(
+              productData.selectedAttributes.swatch
+            )
         );
       });
-
-      if (product !== undefined) {
-        dispatch.store.setProductQuantity({
+      if (equalProduct !== undefined) {
+        setProductQuantity({
           operation: "increment",
-          id: dataToDispatch.product.id,
-          selectedAttributes: dataToDispatch.product.selectedAttributes,
+          id: productData.id,
+          selectedAttributes: productData.selectedAttributes,
         });
-      } else dispatch.store.setCart({ ...dataToDispatch, quantity: 1 });
+      } else setCart({ ...productData, quantity: 1 });
+    };
+
+    const handleSelectedAttributes = () => {
+      const attributes = { text: [], swatch: [] };
+
+      product.attributes.map((attribute) => {
+        const attributeType = attribute.type;
+
+        attributes[attributeType].push(attribute.items[0].displayValue);
+      });
+
+      return attributes;
     };
 
     return (
@@ -68,10 +78,7 @@ class ProductCard extends React.Component {
                 onClick={(e) => {
                   e.preventDefault();
 
-                  handleAddToCart({
-                    ...product,
-                    selectedAttributes: { text: null, swatch: null },
-                  });
+                  handleAddToCart();
                 }}
               >
                 <CartIcon width={52} height={52} />
@@ -84,10 +91,10 @@ class ProductCard extends React.Component {
               </Heading>
               <S.PriceWrapper inStock={product.inStock}>
                 <Paragraph color="secondary" size="18px" weight="500">
-                  {rootState.currency.symbol}
+                  {currency.symbol}
                   {
                     product.prices.find(
-                      (el) => el.currency.label === rootState.currency.label
+                      (el) => el.currency.label === currency.label
                     ).amount
                   }
                 </Paragraph>
@@ -101,11 +108,13 @@ class ProductCard extends React.Component {
 }
 
 const mapState = (state) => ({
-  store: state.store,
+  cart: state.store.cart,
+  currency: state.store.currency,
 });
 
 const mapDispatch = (dispatch) => ({
   setCart: dispatch.store.setCart,
+  setProductQuantity: dispatch.store.setProductQuantity,
 });
 
 export default connect(mapState, mapDispatch)(ProductCard);
