@@ -1,12 +1,11 @@
 import React from "react";
 import parse from "html-react-parser";
+import { connect } from "react-redux";
 
 import { GET_PRODUCT } from "../../../services/queries/products";
 
 import Button from "../../atoms/Button/Button";
 import FlexContainer from "../../atoms/FlexContainer/FlexContainer";
-
-import { store } from "../../../store";
 
 import * as S from "./Product.styles";
 
@@ -18,19 +17,19 @@ class Product extends React.Component {
     productGallery: [],
   };
 
-  componentDidMount() {
-    GET_PRODUCT(this.props.productId).then((result) => {
-      this.setState({
-        productData: result.data.product,
-        productGallery: result.data.product.gallery,
-        currentImage: result.data.product.gallery[0],
-      });
-    });
-  }
+  getProduct = async () => {
+    try {
+      const data = await GET_PRODUCT(this.props.productId);
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state !== nextState || store.getState().store.currency;
-  }
+      this.setState({
+        productData: data.product,
+        productGallery: data.product.gallery,
+        currentImage: data.product.gallery[0],
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   handleSelectedAttributes = (variation, item) => {
     if (variation.type === "swatch") {
@@ -51,10 +50,13 @@ class Product extends React.Component {
         },
       });
   };
+
+  componentDidMount() {
+    this.getProduct();
+  }
+
   render() {
-    console.log(this.state);
-    const { dispatch } = store;
-    const rootState = store.getState().store;
+    const { cart, currency, setCart, setProductQuantity } = this.props;
 
     const handleAddToCart = (payload) => {
       const dataToDispatch = {
@@ -69,7 +71,7 @@ class Product extends React.Component {
           selectedAttributes: payload.selectedAttributes,
         },
       };
-      const product = rootState.cart.products.find((product) => {
+      const product = cart.products.find((product) => {
         return (
           product.id === payload.id &&
           product.selectedAttributes === payload.selectedAttributes
@@ -77,12 +79,12 @@ class Product extends React.Component {
       });
 
       if (product !== undefined) {
-        dispatch.store.setProductQuantity({
+        setProductQuantity({
           operation: "increment",
           id: dataToDispatch.product.id,
           selectedAttributes: dataToDispatch.product.selectedAttributes,
         });
-      } else dispatch.store.setCart({ ...dataToDispatch, quantity: 1 });
+      } else setCart({ ...dataToDispatch, quantity: 1 });
     };
 
     return (
@@ -98,7 +100,7 @@ class Product extends React.Component {
               <img
                 key={index}
                 src={image}
-                alt="Product image"
+                alt={this.state.productData.name}
                 onClick={() => {
                   this.setState({
                     currentImage: image,
@@ -130,7 +132,7 @@ class Product extends React.Component {
                       {variation.name}:
                     </S.Title>
                   </FlexContainer>
-                  <FlexContainer width="100%" justify="space-between">
+                  <FlexContainer width="100%" justify="space-start">
                     {variation.items.map((item, index) => (
                       <Button
                         key={index}
@@ -138,6 +140,7 @@ class Product extends React.Component {
                         height="45px"
                         type="button"
                         disabled={false}
+                        margin="0 10px 0 0" // Change it to style on Product.styles.js file importing button
                         btnStyle={
                           (variation.type === "text" &&
                             this.state.attributes !== {} &&
@@ -181,10 +184,10 @@ class Product extends React.Component {
                 Price:
               </S.Title>
               <S.Title weight="700" size="1.7rem">
-                {rootState.currency.symbol}
+                {currency.symbol}
                 {this.state.productData.prices !== undefined &&
                   this.state.productData.prices.find(
-                    (el) => el.currency.label === rootState.currency.label
+                    (el) => el.currency.label === currency.label
                   ).amount}
               </S.Title>
             </FlexContainer>
@@ -231,4 +234,14 @@ class Product extends React.Component {
   }
 }
 
-export default Product;
+const mapState = (state) => ({
+  cart: state.store.cart,
+  currency: state.store.currency,
+});
+
+const mapDispatch = (dispatch) => ({
+  setCart: dispatch.store.setCart,
+  setProductQuantity: dispatch.store.setProductQuantity,
+});
+
+export default connect(mapState, mapDispatch)(Product);
