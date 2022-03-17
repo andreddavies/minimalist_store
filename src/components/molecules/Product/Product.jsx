@@ -31,26 +31,6 @@ class Product extends React.Component {
     }
   };
 
-  handleSelectedAttributes = (variation, item) => {
-    if (variation.type === "swatch") {
-      this.setState({
-        attributes: {
-          swatch: item.displayValue,
-          text:
-            (this.state.attributes.text && this.state.attributes.text) || null,
-        },
-      });
-    } else
-      this.setState({
-        attributes: {
-          swatch:
-            (this.state.attributes.swatch && this.state.attributes.swatch) ||
-            null,
-          text: item.displayValue,
-        },
-      });
-  };
-
   componentDidMount() {
     this.getProduct();
   }
@@ -58,33 +38,45 @@ class Product extends React.Component {
   render() {
     const { cart, currency, setCart, setProductQuantity } = this.props;
 
-    const handleAddToCart = (payload) => {
-      const dataToDispatch = {
-        product: {
-          id: payload.id,
-          name: payload.name,
-          brand: payload.brand,
-          prices: payload.prices,
-          inStock: payload.inStock,
-          gallery: payload.gallery,
-          attributes: payload.attributes,
-          selectedAttributes: payload.selectedAttributes,
-        },
+    const handleAddToCart = () => {
+      const productData = {
+        id: this.state.productData.id,
+        name: this.state.productData.name,
+        brand: this.state.productData.brand,
+        prices: this.state.productData.prices,
+        inStock: this.state.productData.inStock,
+        gallery: this.state.productData.gallery,
+        attributes: this.state.productData.attributes,
+        selectedAttributes: handleSelectedAttributes(),
       };
-      const product = cart.products.find((product) => {
+
+      const equalProduct = cart.products.find((element) => {
         return (
-          product.id === payload.id &&
-          product.selectedAttributes === payload.selectedAttributes
+          element.id === productData.id &&
+          element.selectedAttributes.text.join(
+            element.selectedAttributes.swatch
+          ) ===
+            productData.selectedAttributes.text.join(
+              productData.selectedAttributes.swatch
+            )
         );
       });
 
-      if (product !== undefined) {
+      if (equalProduct !== undefined) {
         setProductQuantity({
           operation: "increment",
-          id: dataToDispatch.product.id,
-          selectedAttributes: dataToDispatch.product.selectedAttributes,
+          id: productData.id,
+          selectedAttributes: productData.selectedAttributes,
         });
-      } else setCart({ ...dataToDispatch, quantity: 1 });
+      } else setCart({ ...productData, quantity: 1 });
+    };
+
+    const handleSelectedAttributes = (variation, item) => {
+      const attributes = { text: [], swatch: [] };
+      console.log(variation.type, item.displayValue);
+      attributes[variation.type].push(item.displayValue);
+
+      return this.setState({ attributes: { ...attributes } });
     };
 
     return (
@@ -111,7 +103,10 @@ class Product extends React.Component {
             ))}
           </S.SmallImagesWrapper>
           <S.ImageWrapper>
-            <img alt="Product image" src={this.state.currentImage} />
+            <img
+              src={this.state.currentImage}
+              alt={this.state.productData.name}
+            />
           </S.ImageWrapper>
         </S.GalleryContainer>
         <S.ProductDetailsContainer>
@@ -134,29 +129,25 @@ class Product extends React.Component {
                   </FlexContainer>
                   <FlexContainer width="100%" justify="space-start">
                     {variation.items.map((item, index) => (
-                      <Button
+                      <S.AttributeButton
                         key={index}
-                        width="63px"
-                        height="45px"
                         type="button"
-                        disabled={false}
-                        margin="0 10px 0 0" // Change it to style on Product.styles.js file importing button
                         btnStyle={
-                          (variation.type === "text" &&
-                            this.state.attributes !== {} &&
-                            this.state.attributes.text === item.displayValue &&
+                          (this.state.attributes.text &&
+                            this.state.attributes.text.find(
+                              (el) => el === item.displayValue
+                            ) &&
                             "secondary") ||
-                          "primary" ||
                           "primary"
                         }
-                        styleProps={
-                          variation.type === "swatch" &&
-                          this.state.attributes !== {} &&
-                          this.state.attributes.swatch === item.displayValue &&
-                          "border: 4px solid #d3d3d3;"
+                        active={
+                          this.state.attributes.swatch &&
+                          this.state.attributes.swatch.find(
+                            (el) => el === item.displayValue
+                          )
                         }
                         onClick={() =>
-                          this.handleSelectedAttributes(variation, item)
+                          handleSelectedAttributes(variation, item)
                         }
                       >
                         {(variation.type === "swatch" && (
@@ -169,7 +160,7 @@ class Product extends React.Component {
                           />
                         )) ||
                           item.displayValue}
-                      </Button>
+                      </S.AttributeButton>
                     ))}
                   </FlexContainer>
                 </div>
@@ -208,17 +199,10 @@ class Product extends React.Component {
                       this.state.attributes.swatch ||
                       this.state.attributes.text
                     ) {
-                      handleAddToCart({
-                        ...this.state.productData,
-                        selectedAttributes: this.state.attributes,
-                      });
+                      handleAddToCart();
                     } else alert("Select product variations to add!");
                     return;
-                  } else
-                    handleAddToCart({
-                      ...this.state.productData,
-                      selectedAttributes: this.state.attributes,
-                    });
+                  } else handleAddToCart();
                 }}
               >
                 ADD TO CART
