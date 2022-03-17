@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+import { Button } from "../../atoms/Button/Button.styles";
+
+const AttributeButton = styled(Button)`
+  width: 63px;
+  height: 45px;
+  margin-right: 10px;
+  border: ${({ active }) => active && "4px solid #d3d3d3"};
+`;
+
 const GalleryContainer = styled.div`
   width: 100%;
   display: flex;
@@ -21,11 +30,15 @@ const ImageWrapper = styled.div`
     height: 100%;
     max-width: 100%;
     max-height: 511px;
+    object-fit: contain;
   }
 
   @media screen and (min-width: 768px) {
     width: 80%;
+    display: flex;
     max-height: 511px;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -43,12 +56,14 @@ const SmallImagesWrapper = styled.div`
     cursor: pointer;
     max-height: 80px;
     margin-left: 20px;
-    ${(props) => props.selected && "border: 5px solid #CCC"};
+    object-fit: contain;
+    ${({ selected }) => selected && "border: 5px solid #CCC"};
 
     @media screen and (min-width: 768px) {
       width: 100%;
       margin-left: 0;
-      margin-bottom: 1.28rem;
+      max-height: 150px;
+      margin-bottom: 20px;
     }
   }
 
@@ -57,9 +72,21 @@ const SmallImagesWrapper = styled.div`
     height: 100%;
     margin-top: 0;
     overflow-x: auto;
+    max-height: 511px;
+    overflow-y: scroll;
     align-items: center;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
+
+    ::-o-scrollbar {
+      display: none;
+    }
+    ::-moz-scrollbar {
+      display: none;
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 
@@ -93,6 +120,7 @@ export {
   Title,
   Paragraph,
   ImageWrapper,
+  AttributeButton,
   GalleryContainer,
   SmallImagesWrapper,
   ProductDetailsContainer,
