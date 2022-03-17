@@ -24,9 +24,6 @@ const ProductItem = styled.li`
   &&:hover {
     box-shadow: 0px 4px 35px
       ${({ theme }) => theme.colors.productCard.cardShadow};
-    filter: drop-shadow(
-      0px 4px 35px ${({ theme }) => theme.colors.productCard.cardShadow}
-    );
 
     ${IconWrapper} {
       & > svg {
@@ -45,6 +42,7 @@ const ProductItem = styled.li`
 const ImageWrapper = styled.div`
   width: 100%;
   max-width: 354px;
+  position: relative;
 
   & > img {
     width: 100%;
@@ -54,12 +52,12 @@ const ImageWrapper = styled.div`
 `;
 
 const ImageOverflow = styled.div`
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
   z-index: 999;
+  bottom: 60px;
   display: flex;
-  max-width: 310px;
-  max-height: 330px;
   position: absolute;
   align-items: center;
   justify-content: center;
