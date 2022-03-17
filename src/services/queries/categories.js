@@ -1,8 +1,8 @@
 import { apiConfig } from "../apiConfig";
 import { gql } from "@apollo/client";
 
-const GET_CATEGORIES = async () => {
-  return await apiConfig
+const GET_CATEGORIES = () => {
+  return apiConfig
     .query({
       query: gql`
         query {
@@ -13,7 +13,7 @@ const GET_CATEGORIES = async () => {
       `,
     })
     .then((response) => {
-      return response;
+      return response.data;
     });
 };
 
