@@ -8,10 +8,9 @@ import Select from "../../atoms/Select/Select";
 import CartIcon from "../../../icons/CartIcon";
 import Heading from "../../atoms/Heading/Heading";
 
-import { store } from "../../../store";
+import withRouter from "../../../hocs/withRouter";
 import { GET_CURRENCIES } from "../../../services/queries/currencies";
 import { GET_CATEGORIES } from "../../../services/queries/categories";
-
 import * as S from "./Header.styles";
 
 class Header extends React.Component {
@@ -20,92 +19,114 @@ class Header extends React.Component {
     currencies: [],
   };
 
-  componentDidMount() {
-    GET_CATEGORIES().then((categoriesResult) => {
-      GET_CURRENCIES().then((currenciesResult) => {
-        this.setState({
-          categories: categoriesResult.data.categories,
-          currencies: currenciesResult.data.currencies,
-        });
-      });
-    });
-  }
+  getCategories = async () => {
+    try {
+      const data = await GET_CATEGORIES();
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      this.state !== nextState ||
-      store.getState().store.currentCategory ||
-      store.getState().store.currency
-    );
+      this.setState({ categories: data.categories });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  getCurrencies = async () => {
+    try {
+      const data = await GET_CURRENCIES();
+
+      this.setState({ currencies: data.currencies });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  componentDidMount() {
+    this.getCategories();
+    this.getCurrencies();
   }
 
   render() {
-    const { dispatch } = store;
-    const rootState = store.getState().store;
+    const {
+      cart,
+      router,
+      currency,
+      navigate,
+      cartOverlay,
+      setCategory,
+      setCurrency,
+      setCartOverlay,
+      currentCategory,
+    } = this.props;
 
     return (
       <S.HeaderContainer>
-        <S.Box>
-          {this.state.categories.map((el, index) => (
-            <Tab
-              key={index}
-              width="100%"
-              text={el.name.toUpperCase()}
-              isActive={rootState.currentCategory === el.name}
-              onClick={() => dispatch.store.setCategory(el.name)}
-            />
-          ))}
-        </S.Box>
-        <S.Box>
-          <Link to="/">
-            <S.Image src={`${process.env.PUBLIC_URL}/assets/logo.png`} />
-          </Link>
-        </S.Box>
-        <S.Box justify="flex-start">
-          <Select
-            onChange={(event) => {
-              dispatch.store.setCurrency(
-                this.state.currencies[event.target.selectedIndex]
-              );
-            }}
-          >
-            {this.state.currencies.map((option, index) => (
-              <option
-                key={index}
-                selected={option.label === rootState.currency.label}
-              >
-                {option.symbol} {option.label}
-              </option>
-            ))}
-          </Select>
+        <S.CenterWrapper>
           <S.Box>
-            <Button
-              width="20px"
-              type="button"
-              height="20px"
-              btnStyle="none"
-              onClick={() => {
-                dispatch.store.setCartOverlay(!rootState.cartOverlay);
+            {this.state.categories.map((el, index) => (
+              <Tab
+                key={index}
+                width="100%"
+                text={el.name.toUpperCase()}
+                isActive={currentCategory === el.name}
+                onClick={() => {
+                  if (router.pathname !== "/") {
+                    setCategory(el.name);
+                    navigate("/");
+                  }
+                  setCategory(el.name);
+                }}
+              />
+            ))}
+          </S.Box>
+          <S.Box>
+            <Link to="/">
+              <S.Image src={`${process.env.PUBLIC_URL}/assets/logo.png`} />
+            </Link>
+          </S.Box>
+          <S.Box justify="flex-start">
+            <Select
+              defaultValue={`${currency.symbol} ${currency.label}`} // Change this
+              onChange={(event) => {
+                setCurrency(this.state.currencies[event.target.selectedIndex]);
               }}
             >
-              <CartIcon width={20} height={20} />
-              {rootState.cart.quantity > 0 && (
-                <S.CartQuantity>
-                  <Heading size="14px" color="secondary" weight="700">
-                    {rootState.cart.quantity}
-                  </Heading>
-                </S.CartQuantity>
-              )}
-            </Button>
+              {this.state.currencies.map((option, index) => (
+                <option key={index}>
+                  {option.symbol} {option.label}
+                </option>
+              ))}
+            </Select>
+            <S.Box>
+              <Button
+                width="20px"
+                type="button"
+                height="20px"
+                btnStyle="none"
+                onClick={() => {
+                  setCartOverlay(!cartOverlay);
+                }}
+              >
+                <CartIcon width={20} height={20} />
+                {cart.quantity > 0 && (
+                  <S.CartQuantity>
+                    <Heading size="14px" color="secondary" weight="700">
+                      {cart.quantity}
+                    </Heading>
+                  </S.CartQuantity>
+                )}
+              </Button>
+            </S.Box>
           </S.Box>
-        </S.Box>
+        </S.CenterWrapper>
       </S.HeaderContainer>
     );
   }
 }
 
 const mapState = (state) => ({
-  store: state.store,
+  cart: state.store.cart,
+  currency: state.store.currency,
+  cartOverlay: state.store.cartOverlay,
+  currentCategory: state.store.currentCategory,
 });
 
 const mapDispatch = (dispatch) => ({
@@ -114,4 +135,4 @@ const mapDispatch = (dispatch) => ({
   setCartOverlay: dispatch.store.setCartOverlay,
 });
 
-export default connect(mapState, mapDispatch)(Header);
+export default withRouter(connect(mapState, mapDispatch)(Header));
