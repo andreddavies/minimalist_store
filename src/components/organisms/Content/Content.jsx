@@ -7,18 +7,16 @@ import CartPage from "../../../views/pages/CartPage/CartPage";
 import ProductPage from "../../../views/pages/ProductPage/ProductPage";
 import CategoryPage from "../../../views/pages/CategoryPage/CategoryPage";
 
-import { store } from "../../../store";
-
 import * as S from "./Content.styles";
 
 class Content extends React.Component {
   render() {
-    const rootState = store.getState().store;
+    const { cartOverlay } = this.props;
 
     return (
       <S.Main>
-        <Cart type="cartOverlay" isShowing={rootState.cartOverlay} />
-        <S.BackgroundWall modalActive={rootState.cartOverlay} />
+        <Cart type="cartOverlay" isShowing={cartOverlay} />
+        <S.BackgroundWall modalActive={cartOverlay} />
         <Routes>
           <Route exact path="/" element={<CategoryPage />} />
           <Route path="/product/:productId" element={<ProductPage />} />
@@ -30,7 +28,7 @@ class Content extends React.Component {
 }
 
 const mapState = (state) => ({
-  store: state.store,
+  cartOverlay: state.store.cartOverlay,
 });
 
 export default connect(mapState, null)(Content);

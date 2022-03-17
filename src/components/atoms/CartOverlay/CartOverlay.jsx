@@ -5,22 +5,20 @@ import Button from "../Button/Button";
 import Heading from "../Heading/Heading";
 import FlexContainer from "../FlexContainer/FlexContainer";
 
-import { store } from "../../../store";
 import { price } from "../../../plugins/masks";
 
 import * as S from "./CartOverlay.styles";
 
 class CartOverlay extends React.Component {
   render() {
-    const { dispatch } = store;
-    const rootState = store.getState().store;
+    const { cart, currency, children, setProductQuantity } = this.props;
 
     const productPrice = (product) =>
       price(
         product.prices.find((el) => {
-          return el.currency.label === rootState.currency.label;
+          return el.currency.label === currency.label;
         }).amount
-      )[rootState.currency.label]();
+      )[currency.label]();
 
     return (
       <FlexContainer
@@ -32,8 +30,8 @@ class CartOverlay extends React.Component {
             z-index: 999999;
             background: #fff;
             position: absolute;
-            height: ${rootState.cart.products.length > 0 && "70%"};
-            overflow-y: ${rootState.cart.products.length > 0 && "scroll"};
+            height: ${cart.products.length > 0 && "70%"};
+            overflow-y: ${cart.products.length > 0 && "scroll"};
             ::-o-scrollbar {
               display: none;
             }
@@ -67,11 +65,11 @@ class CartOverlay extends React.Component {
                 color="primary"
                 margin="1rem 0.5rem"
               >
-                {`${rootState.cart.quantity} items`}
+                {`${cart.quantity} items`}
               </Heading>
             </FlexContainer>
-            {rootState.cart.products !== undefined &&
-              rootState.cart.products.map((product, index) => {
+            {cart.products !== undefined &&
+              cart.products.map((product, index) => {
                 return (
                   <FlexContainer
                     key={index}
@@ -164,7 +162,7 @@ class CartOverlay extends React.Component {
                             fontWeight="400"
                             btnStyle="primary"
                             onClick={() => {
-                              dispatch.store.setProductQuantity({
+                              setProductQuantity({
                                 id: product.id,
                                 operation: "increment",
                                 selectedAttributes: product.selectedAttributes,
@@ -183,7 +181,7 @@ class CartOverlay extends React.Component {
                             fontWeight="400"
                             btnStyle="primary"
                             onClick={() => {
-                              dispatch.store.setProductQuantity({
+                              setProductQuantity({
                                 id: product.id,
                                 operation: "decrement",
                                 selectedAttributes: product.selectedAttributes,
@@ -210,7 +208,7 @@ class CartOverlay extends React.Component {
                 );
               })}
           </FlexContainer>
-          {this.props.children}
+          {children}
         </FlexContainer>
       </FlexContainer>
     );
@@ -218,11 +216,11 @@ class CartOverlay extends React.Component {
 }
 
 const mapState = (state) => ({
-  store: state.store,
+  cart: state.store.cart,
+  currency: state.store.currency,
 });
 
 const mapDispatch = (dispatch) => ({
-  setCart: dispatch.store.setCart,
   setProductQuantity: dispatch.store.setProductQuantity,
 });
 

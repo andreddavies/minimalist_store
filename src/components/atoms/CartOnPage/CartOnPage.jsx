@@ -8,7 +8,6 @@ import FlexContainer from "../FlexContainer/FlexContainer";
 import LessThanIcon from "../../../icons/LessThanIcon";
 import GreaterThanIcon from "../../../icons/GreaterThanIcon";
 
-import { store } from "../../../store";
 import { price } from "../../../plugins/masks";
 
 import * as S from "./CartOnPage.styles";
@@ -19,20 +18,16 @@ class CartOnPage extends React.Component {
     attributeActive: null,
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state !== nextState || this.state.attributes !== nextState;
-  }
-
   render() {
-    const { dispatch } = store;
-    const rootState = store.getState().store;
+    const { cart, currency, children, setAttributes, setProductQuantity } =
+      this.props;
 
     const productPrice = (product) =>
       price(
         product.prices.find((el) => {
-          return el.currency.label === rootState.currency.label;
+          return el.currency.label === currency.label;
         }).amount
-      )[rootState.currency.label]();
+      )[currency.label]();
 
     const handleSelectedAttributes = (variation, item) => {
       if (variation.type === "swatch") {
@@ -69,14 +64,14 @@ class CartOnPage extends React.Component {
                 Cart
               </Heading>
             </FlexContainer>
-            {rootState.cart.products.length === 0 && (
+            {cart.products.length === 0 && (
               <FlexContainer margin="0" width="100%" justify="center">
                 <Heading color="primary" size="3rem" weight="400">
                   Cart is empty!
                 </Heading>
               </FlexContainer>
             )}
-            {rootState.cart.products.map((product, index) => (
+            {cart.products.map((product, index) => (
               <S.Wrapper
                 key={index}
                 width="100%"
@@ -175,7 +170,7 @@ class CartOnPage extends React.Component {
                                 handleSelectedAttributes(variation, item);
 
                                 if (variation.type === "text") {
-                                  dispatch.store.setAttributes({
+                                  setAttributes({
                                     ...product,
                                     oldAttributes: product.selectedAttributes,
                                     selectedAttributes: {
@@ -184,7 +179,7 @@ class CartOnPage extends React.Component {
                                     },
                                   });
                                 } else
-                                  dispatch.store.setAttributes({
+                                  setAttributes({
                                     ...product,
                                     oldAttributes: product.selectedAttributes,
                                     selectedAttributes: {
@@ -233,7 +228,7 @@ class CartOnPage extends React.Component {
                         font-size: 1.5rem;
                       `}
                         onClick={() => {
-                          dispatch.store.setProductQuantity({
+                          setProductQuantity({
                             id: product.id,
                             operation: "increment",
                             selectedAttributes: product.selectedAttributes,
@@ -257,7 +252,7 @@ class CartOnPage extends React.Component {
                         font-size: 1.5rem;
                       `}
                         onClick={() => {
-                          dispatch.store.setProductQuantity({
+                          setProductQuantity({
                             id: product.id,
                             operation: "decrement",
                             selectedAttributes: product.selectedAttributes,
@@ -302,7 +297,7 @@ class CartOnPage extends React.Component {
               </S.Wrapper>
             ))}
           </FlexContainer>
-          {this.props.children}
+          {children}
         </FlexContainer>
       </FlexContainer>
     );
@@ -310,12 +305,13 @@ class CartOnPage extends React.Component {
 }
 
 const mapState = (state) => ({
-  store: state.store,
+  cart: state.store.cart,
+  currency: state.store.currency,
 });
 
 const mapDispatch = (dispatch) => ({
-  setCart: dispatch.store.setCart,
   setAttributes: dispatch.store.setAttributes,
+  setProductQuantity: dispatch.store.setProductQuantity,
 });
 
 export default connect(mapState, mapDispatch)(CartOnPage);

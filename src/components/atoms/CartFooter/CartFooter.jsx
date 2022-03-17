@@ -1,10 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import Button from "../Button/Button";
 import Heading from "../Heading/Heading";
 import FlexContainer from "../FlexContainer/FlexContainer";
 
-import { store } from "../../../store";
 import getCartTotalPrice from "../../../plugins/getCartTotalPrice";
 
 import * as S from "./CartFooter.styles";
@@ -15,13 +15,12 @@ class CartFooter extends React.Component {
   }
 
   render() {
-    const { dispatch } = store;
-    const rootState = store.getState().store;
+    const { cart, cartOverlay, setCartOverlay } = this.props;
 
     return (
       <S.CartFooterContainer
-        isCartOverlay={this.props.cartOverlay}
-        cartLength={rootState.cart.products.length}
+        isCartOverlay={cartOverlay}
+        cartLength={cart.products.length}
       >
         <FlexContainer
           width="100%"
@@ -49,7 +48,7 @@ class CartFooter extends React.Component {
           align="center"
           justify="space-between"
           tabletMinScreen={`
-            ${!this.props.cartOverlay && "justify-content: flex-end"};
+            ${!cartOverlay && "justify-content: flex-end"};
           `}
         >
           <Button
@@ -60,13 +59,10 @@ class CartFooter extends React.Component {
             fontWeight="600"
             btnStyle="primary"
             styleProps={`
-              ${!this.props.cartOverlay && "display: none"}
+              ${!cartOverlay && "display: none"}
             `}
           >
-            <S.StyledLink
-              to="/cart"
-              onClick={() => dispatch.store.setCartOverlay(false)}
-            >
+            <S.StyledLink to="/cart" onClick={() => setCartOverlay(false)}>
               VIEW BAG
             </S.StyledLink>
           </Button>
@@ -89,7 +85,7 @@ class CartFooter extends React.Component {
                 color: "inherit",
                 textDecoration: "none",
               }}
-              onClick={() => dispatch.store.setCartOverlay(false)}
+              onClick={() => setCartOverlay(false)}
             >
               CHECK OUT
             </S.StyledLink>
@@ -100,4 +96,12 @@ class CartFooter extends React.Component {
   }
 }
 
-export default CartFooter;
+const mapState = (state) => ({
+  cart: state.store.cart,
+});
+
+const mapDispatch = (dispatch) => ({
+  setCartOverlay: dispatch.store.setCartOverlay,
+});
+
+export default connect(mapState, mapDispatch)(CartFooter);

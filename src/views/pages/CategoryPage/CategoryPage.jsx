@@ -4,19 +4,15 @@ import { connect } from "react-redux";
 import ProductList from "../../../components/molecules/ProductList/ProductList";
 import PagesContainer from "../../../components/organisms/PagesContainer/PagesContainer";
 
-import { store } from "../../../store";
-
 import * as S from "./CategoryPage.styles";
 
 class CategoryPage extends React.Component {
   render() {
-    const rootState = store.getState().store;
+    const { currentCategory } = this.props;
 
     return (
       <PagesContainer>
-        <S.TitleWrapper>
-          {rootState.currentCategory.toUpperCase()}
-        </S.TitleWrapper>
+        <S.TitleWrapper>{currentCategory.toUpperCase()}</S.TitleWrapper>
         <ProductList />
       </PagesContainer>
     );
@@ -24,7 +20,7 @@ class CategoryPage extends React.Component {
 }
 
 const mapState = (state) => ({
-  store: state.store,
+  currentCategory: state.store.currentCategory,
 });
 
 export default connect(mapState, null)(CategoryPage);

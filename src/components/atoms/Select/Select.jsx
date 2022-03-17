@@ -1,26 +1,30 @@
 import React from "react";
-
-import { store } from "../../../store";
+import { connect } from "react-redux";
 
 import * as S from "./Select.styles";
 
 class Select extends React.Component {
   render() {
-    const { dispatch } = store;
-    const rootState = store.getState().store;
+    const { onChange, children, cartOverlay, setCartOverlay } = this.props;
 
     return (
       <S.Select
         multiple={false}
-        onChange={this.props.onChange}
-        onFocus={() =>
-          rootState.cartOverlay && dispatch.store.setCartOverlay(false)
-        }
+        onChange={onChange}
+        onFocus={() => cartOverlay && setCartOverlay(false)}
       >
-        {this.props.children}
+        {children}
       </S.Select>
     );
   }
 }
 
-export default Select;
+const mapState = (state) => ({
+  cartOverlay: state.store.cartOverlay,
+});
+
+const mapDispatch = (dispatch) => ({
+  setCartOverlay: dispatch.store.setCartOverlay,
+});
+
+export default connect(mapState, mapDispatch)(Select);
