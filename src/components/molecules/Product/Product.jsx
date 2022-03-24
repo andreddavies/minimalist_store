@@ -46,8 +46,8 @@ class Product extends React.Component {
         prices: this.state.productData.prices,
         inStock: this.state.productData.inStock,
         gallery: this.state.productData.gallery,
+        selectedAttributes: this.state.attributes,
         attributes: this.state.productData.attributes,
-        selectedAttributes: handleSelectedAttributes(),
       };
 
       const equalProduct = cart.products.find((element) => {
@@ -72,12 +72,30 @@ class Product extends React.Component {
     };
 
     const handleSelectedAttributes = (variation, item) => {
-      const attributes = { text: [], swatch: [] };
-      console.log(variation.type, item.displayValue);
-      attributes[variation.type].push(item.displayValue);
+      const attributes = {
+        text: { ...this.state.attributes.text },
+        swatch: { ...this.state.attributes.swatch },
+      };
 
-      return this.setState({ attributes: { ...attributes } });
+      if (
+        this.state.attributes[variation.type] &&
+        this.state.attributes[variation.type][variation.name] !== undefined
+      ) {
+        attributes[variation.type] = {
+          ...this.state.attributes[variation.type],
+          [variation.name]: item.displayValue,
+        };
+      } else {
+        attributes[variation.type] = {
+          ...this.state.attributes[variation.type],
+          [variation.name]: item.displayValue,
+        };
+      }
+
+      this.setState({ attributes: { ...attributes } });
     };
+
+    console.log(this.state.attributes);
 
     return (
       <FlexContainer
@@ -133,31 +151,25 @@ class Product extends React.Component {
                         key={index}
                         type="button"
                         btnStyle={
-                          (this.state.attributes.text &&
-                            this.state.attributes.text.find(
-                              (el) => el === item.displayValue
-                            ) &&
+                          (variation.type === "text" &&
+                            this.state.attributes.text &&
+                            this.state.attributes.text[variation.name] ===
+                              item.displayValue &&
                             "secondary") ||
                           "primary"
                         }
                         active={
+                          variation.type === "swatch" &&
                           this.state.attributes.swatch &&
-                          this.state.attributes.swatch.find(
-                            (el) => el === item.displayValue
-                          )
+                          this.state.attributes.swatch[variation.name] ===
+                            item.displayValue
                         }
-                        onClick={() =>
-                          handleSelectedAttributes(variation, item)
-                        }
+                        onClick={() => {
+                          handleSelectedAttributes(variation, item);
+                        }}
                       >
                         {(variation.type === "swatch" && (
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              background: item.value,
-                            }}
-                          />
+                          <S.SwatchFiller backgroundColor={item.displayValue} />
                         )) ||
                           item.displayValue}
                       </S.AttributeButton>
