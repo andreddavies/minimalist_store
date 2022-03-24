@@ -30,24 +30,27 @@ class CartOnPage extends React.Component {
       )[currency.label]();
 
     const handleSelectedAttributes = (variation, item) => {
-      if (variation.type === "swatch") {
-        this.setState({
-          attributes: {
-            swatch: item.displayValue,
-            text:
-              (this.state.attributes.text && this.state.attributes.text) ||
-              null,
-          },
-        });
-      } else
-        this.setState({
-          attributes: {
-            swatch:
-              (this.state.attributes.swatch && this.state.attributes.swatch) ||
-              null,
-            text: item.displayValue,
-          },
-        });
+      const attributes = {
+        text: { ...this.state.attributes.text },
+        swatch: { ...this.state.attributes.swatch },
+      };
+
+      if (
+        this.state.attributes[variation.type] &&
+        this.state.attributes[variation.type][variation.name] !== undefined
+      ) {
+        attributes[variation.type] = {
+          ...this.state.attributes[variation.type],
+          [variation.name]: item.displayValue,
+        };
+      } else {
+        attributes[variation.type] = {
+          ...this.state.attributes[variation.type],
+          [variation.name]: item.displayValue,
+        };
+      }
+
+      this.setState({ attributes: { ...attributes } });
     };
 
     return (
@@ -129,77 +132,28 @@ class CartOnPage extends React.Component {
                           width="65%"
                           key={index}
                           margin="1rem 0"
-                          justify="space-between"
+                          justify="flex-start"
                         >
                           {variation.items.map((item, index) => (
-                            <Button
+                            <S.AttributeButton
                               key={index}
-                              width="24px"
-                              height="24px"
-                              fontSize="1rem"
-                              fontWeight="400"
-                              btnStyle={
-                                (product.selectedAttributes.text ===
-                                  item.displayValue &&
-                                  "secondary") ||
-                                (variation.type === "text" &&
-                                  this.state.attributes.text &&
-                                  this.state.attributes.text ===
-                                    item.displayValue &&
-                                  "secondary") ||
-                                "primary" ||
-                                "primary"
-                              }
-                              tabletMinScreen={`
-                                width: 68px;
-                                height: 45px;
-                                font-size: 1.15rem;
-                              `}
-                              styleProps={
-                                (product.selectedAttributes.swatch &&
-                                  product.selectedAttributes.swatch ===
-                                    item.displayValue &&
-                                  "border: 4px solid #d3d3d3;") ||
-                                (variation.type === "swatch" &&
-                                  this.state.attributes.swatch &&
-                                  this.state.attributes.swatch ===
-                                    item.displayValue &&
-                                  "border: 4px solid #d3d3d3;")
-                              }
+                              type="button"
+                              btnStyle={"primary"}
+                              active={false}
                               onClick={() => {
-                                handleSelectedAttributes(variation, item);
-
-                                if (variation.type === "text") {
-                                  setAttributes({
-                                    ...product,
-                                    oldAttributes: product.selectedAttributes,
-                                    selectedAttributes: {
-                                      text: item.displayValue,
-                                      swatch: product.selectedAttributes.swatch,
-                                    },
-                                  });
-                                } else
-                                  setAttributes({
-                                    ...product,
-                                    oldAttributes: product.selectedAttributes,
-                                    selectedAttributes: {
-                                      swatch: item.displayValue,
-                                      text: product.selectedAttributes.text,
-                                    },
-                                  });
+                                handleSelectedAttributes(
+                                  variation.type,
+                                  item.displayValue
+                                );
                               }}
                             >
                               {(variation.type === "swatch" && (
-                                <div
-                                  style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    background: item.value,
-                                  }}
+                                <S.SwatchFiller
+                                  backgroundColor={item.displayValue}
                                 />
                               )) ||
                                 item.displayValue}
-                            </Button>
+                            </S.AttributeButton>
                           ))}
                         </FlexContainer>
                       ))}
