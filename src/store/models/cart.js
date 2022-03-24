@@ -35,10 +35,7 @@ const setProductQuantity = (state, payload) => {
   const product = state.cart.products.find((product) => {
     return (
       product.id === payload.id &&
-      product.selectedAttributes.text.join(
-        product.selectedAttributes.swatch
-      ) ===
-        payload.selectedAttributes.text.join(payload.selectedAttributes.swatch)
+      product.selectedAttributes === payload.selectedAttributes
     );
   });
 
@@ -65,6 +62,9 @@ const setProductQuantity = (state, payload) => {
 
   return {
     ...state,
+    cart: {
+      ...state.cart,
+    },
   };
 };
 
