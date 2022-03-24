@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import LoadSpinner from "../../atoms/LoadSpinner/LoadSpinner";
 import ProductCard from "../../atoms/ProductCard/ProductCard";
 
 import { GET_PRODUCTS } from "../../../services/queries/products";
@@ -40,9 +41,10 @@ class ProductList extends React.Component {
     return (
       <S.Container>
         <S.List>
-          {this.state.productsList.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {(!this.state.productsList.length > 0 && <LoadSpinner />) ||
+            this.state.productsList.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
         </S.List>
       </S.Container>
     );
