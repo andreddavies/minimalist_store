@@ -33,9 +33,9 @@ const ProductItem = styled.li`
   }
 
   @media screen and (min-width: 768px) {
-    width: 30%;
+    width: 33.3%;
+    margin: 40px 0;
     max-width: none;
-    margin: 40px 1.66%;
   }
 `;
 
