@@ -9,6 +9,12 @@ const AttributeButton = styled(Button)`
   border: ${({ active }) => active && "4px solid #d3d3d3"};
 `;
 
+const SwatchFiller = styled.div`
+  width: 100%;
+  height: 100%;
+  background: ${({ backgroundColor }) => backgroundColor};
+`;
+
 const GalleryContainer = styled.div`
   width: 100%;
   display: flex;
@@ -120,6 +126,7 @@ export {
   Title,
   Paragraph,
   ImageWrapper,
+  SwatchFiller,
   AttributeButton,
   GalleryContainer,
   SmallImagesWrapper,
