@@ -4,6 +4,23 @@ export const colors = {
 
   backgroundWall: "rgba(57, 55, 72, 0.22)",
 
+  alert: {
+    success: {
+      background: "#a6ffa6",
+      text: "#005500",
+    },
+
+    warning: {
+      background: "#222",
+      text: "#608a00",
+    },
+
+    danger: {
+      background: "red",
+      text: "#640000",
+    },
+  },
+
   paragraph: {
     primary: "#FFF",
     secondary: "#1D1F22",
