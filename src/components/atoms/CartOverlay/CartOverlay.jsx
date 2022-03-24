@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import Button from "../Button/Button";
@@ -9,9 +9,10 @@ import { price } from "../../../plugins/masks";
 
 import * as S from "./CartOverlay.styles";
 
-class CartOverlay extends React.Component {
+class CartOverlay extends Component {
   render() {
-    const { cart, currency, children, setProductQuantity } = this.props;
+    const { cart, currency, children, products, setProductQuantity } =
+      this.props;
 
     const productPrice = (product) =>
       price(
@@ -30,8 +31,8 @@ class CartOverlay extends React.Component {
             z-index: 999999;
             background: #fff;
             position: absolute;
-            height: ${cart.products.length > 0 && "70%"};
-            overflow-y: ${cart.products.length > 0 && "scroll"};
+            height: ${products.length > 0 && "70%"};
+            overflow-y: ${products.length > 0 && "scroll"};
             ::-o-scrollbar {
               display: none;
             }
@@ -68,8 +69,8 @@ class CartOverlay extends React.Component {
                 {`${cart.quantity} items`}
               </Heading>
             </FlexContainer>
-            {cart.products !== undefined &&
-              cart.products.map((product, index) => {
+            {products !== undefined &&
+              products.map((product, index) => {
                 return (
                   <FlexContainer
                     key={index}
@@ -218,6 +219,7 @@ class CartOverlay extends React.Component {
 const mapState = (state) => ({
   cart: state.store.cart,
   currency: state.store.currency,
+  products: state.store.cart.products,
 });
 
 const mapDispatch = (dispatch) => ({
