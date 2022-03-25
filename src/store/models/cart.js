@@ -47,10 +47,13 @@ const setAttributes = (state, payload) => {
     );
   });
 
-  product.selectedAttributes = payload.selectedAttributes;
+  product.selectedAttributes = payload.newAttributes;
 
   return {
     ...state,
+    cart: {
+      ...state.cart,
+    },
   };
 };
 
