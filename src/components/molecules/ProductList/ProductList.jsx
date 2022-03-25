@@ -28,7 +28,6 @@ class ProductList extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.props.currentCategory);
     this.getProducts(this.props.currentCategory);
   }
 
