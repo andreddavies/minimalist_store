@@ -5,17 +5,13 @@ import Button from "../Button/Button";
 import Heading from "../Heading/Heading";
 import FlexContainer from "../FlexContainer/FlexContainer";
 
-import getCartTotalPrice from "../../../plugins/getCartTotalPrice";
+import { price } from "../../../plugins/masks";
 
 import * as S from "./CartFooter.styles";
 
 class CartFooter extends React.Component {
-  shouldComponentUpdate() {
-    return true;
-  }
-
   render() {
-    const { cart, cartOverlay, setCartOverlay } = this.props;
+    const { cart, currency, cartOverlay, setCartOverlay } = this.props;
 
     return (
       <S.CartFooterContainer
@@ -40,7 +36,9 @@ class CartFooter extends React.Component {
             color="primary"
             margin="0 0 0 1rem"
           >
-            {getCartTotalPrice()}
+            {(cart.products.length > 0 &&
+              price(cart.totalPrice)[currency.label]()) ||
+              0}
           </Heading>
         </FlexContainer>
         <FlexContainer
@@ -98,6 +96,7 @@ class CartFooter extends React.Component {
 
 const mapState = (state) => ({
   cart: state.store.cart,
+  currency: state.store.currency,
 });
 
 const mapDispatch = (dispatch) => ({
