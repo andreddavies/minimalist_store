@@ -123,7 +123,7 @@ class CartOverlay extends Component {
                                       width: "100%",
                                       height: "100%",
                                       background:
-                                        product.selectedAttributes.swatch,
+                                        product.selectedAttributes.swatch[0],
                                     }}
                                   />
                                 </Button>
@@ -138,7 +138,7 @@ class CartOverlay extends Component {
                                   btnStyle="secondary"
                                   styleProps="cursor: default;"
                                 >
-                                  {product.selectedAttributes.text}
+                                  {product.selectedAttributes.text[0]}
                                 </Button>
                               )}
                           </FlexContainer>
