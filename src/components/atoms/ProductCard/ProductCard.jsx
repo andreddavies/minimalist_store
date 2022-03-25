@@ -22,7 +22,7 @@ class ProductCard extends React.Component {
         inStock: product.inStock,
         gallery: product.gallery,
         attributes: product.attributes,
-        selectedAttributes: handleSelectedAttributes(),
+        selectedAttributes: handleAttributes(),
       };
 
       const equalProduct = cart.products.find((element) => {
@@ -45,13 +45,13 @@ class ProductCard extends React.Component {
       } else setCart({ ...productData, quantity: 1 });
     };
 
-    const handleSelectedAttributes = () => {
-      const attributes = { text: [], swatch: [] };
+    const handleAttributes = () => {
+      const attributes = { text: {}, swatch: {} };
 
       product.attributes.map((attribute) => {
-        const attributeType = attribute.type;
-
-        attributes[attributeType].push(attribute.items[0].displayValue);
+        return (attributes[attribute.type] = {
+          [attribute.name]: attribute.items[0].displayValue,
+        });
       });
 
       return attributes;
