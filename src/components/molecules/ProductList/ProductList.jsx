@@ -23,7 +23,7 @@ class ProductList extends React.Component {
 
       this.setState({ productsList: data.category.products });
     } catch (err) {
-      console.log(err);
+      console.log(err.errors[0].message);
     }
   };
 

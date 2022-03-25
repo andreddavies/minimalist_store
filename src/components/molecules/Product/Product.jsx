@@ -27,7 +27,7 @@ class Product extends React.Component {
         currentImage: data.product.gallery[0],
       });
     } catch (err) {
-      console.log(err);
+      console.log(err.errors[0].message);
     }
   };
 
@@ -94,8 +94,6 @@ class Product extends React.Component {
 
       this.setState({ attributes: { ...attributes } });
     };
-
-    console.log(this.state.attributes);
 
     return (
       <FlexContainer
