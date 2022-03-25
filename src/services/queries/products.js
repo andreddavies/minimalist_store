@@ -65,6 +65,7 @@ const GET_PRODUCTS = (category) => {
               }
               attributes {
                 type
+                name
                 items {
                   id
                   value
