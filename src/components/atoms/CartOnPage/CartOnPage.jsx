@@ -15,7 +15,6 @@ import * as S from "./CartOnPage.styles";
 class CartOnPage extends React.Component {
   state = {
     attributes: {},
-    attributeActive: null,
   };
 
   render() {
@@ -29,28 +28,17 @@ class CartOnPage extends React.Component {
         }).amount
       )[currency.label]();
 
-    const handleSelectedAttributes = (variation, item) => {
-      const attributes = {
-        text: { ...this.state.attributes.text },
-        swatch: { ...this.state.attributes.swatch },
-      };
-
-      if (
-        this.state.attributes[variation.type] &&
-        this.state.attributes[variation.type][variation.name] !== undefined
-      ) {
-        attributes[variation.type] = {
-          ...this.state.attributes[variation.type],
-          [variation.name]: item.displayValue,
-        };
-      } else {
-        attributes[variation.type] = {
-          ...this.state.attributes[variation.type],
-          [variation.name]: item.displayValue,
-        };
-      }
-
-      this.setState({ attributes: { ...attributes } });
+    const handleSelectedAttributes = (product, variation, item) => {
+      setAttributes({
+        id: product.id,
+        newAttributes: {
+          ...product.selectedAttributes,
+          [variation.type]: {
+            [variation.name]: item.displayValue,
+          },
+        },
+        oldAttributes: product.selectedAttributes,
+      });
     };
 
     return (
@@ -138,12 +126,24 @@ class CartOnPage extends React.Component {
                             <S.AttributeButton
                               key={index}
                               type="button"
-                              btnStyle={"primary"}
-                              active={false}
+                              btnStyle={
+                                (product.selectedAttributes[variation.type][
+                                  variation.name
+                                ] === item.displayValue &&
+                                  "secondary") ||
+                                "primary"
+                              }
+                              active={
+                                variation.type === "swatch" &&
+                                product.selectedAttributes[variation.type][
+                                  variation.name
+                                ] === item.displayValue
+                              }
                               onClick={() => {
                                 handleSelectedAttributes(
-                                  variation.type,
-                                  item.displayValue
+                                  product,
+                                  variation,
+                                  item
                                 );
                               }}
                             >
