@@ -7,7 +7,7 @@ import PagesContainer from "../../../components/organisms/PagesContainer/PagesCo
 class ProductPage extends React.Component {
   render() {
     return (
-      <PagesContainer width="95%" tabletScreenWidth="95%">
+      <PagesContainer>
         <Product productId={this.props.params.productId} />
       </PagesContainer>
     );

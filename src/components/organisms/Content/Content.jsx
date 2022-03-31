@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 
-import Alert from "../../atoms/Alert/Alert";
 import Cart from "../../molecules/Cart/Cart";
 import CartPage from "../../../views/pages/CartPage/CartPage";
 import ProductPage from "../../../views/pages/ProductPage/ProductPage";
@@ -17,7 +16,6 @@ class Content extends React.Component {
 
     return (
       <S.Main>
-        <Alert />
         <Cart type="cartOverlay" isShowing={cartOverlay} />
         <S.BackgroundWall
           modalActive={cartOverlay}

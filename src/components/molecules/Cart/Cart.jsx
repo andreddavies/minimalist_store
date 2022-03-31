@@ -8,9 +8,11 @@ import * as S from "./Cart.styles";
 
 class Cart extends React.Component {
   render() {
+    const { isShowing, type } = this.props;
+
     return (
-      <S.CartContainer isShowing={this.props.isShowing}>
-        {(this.props.type === "cartOverlay" && (
+      <S.CartContainer isShowing={isShowing}>
+        {(type === "cartOverlay" && (
           <CartOverlay>
             <CartFooter cartOverlay />
           </CartOverlay>

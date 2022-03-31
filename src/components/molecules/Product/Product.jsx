@@ -96,12 +96,7 @@ class Product extends React.Component {
     };
 
     return (
-      <FlexContainer
-        wrap="wrap"
-        width="100%"
-        justify="flex-start"
-        margin="5.7rem 0 0 0"
-      >
+      <S.PageContainer width="100%" justify="flex-start">
         <S.GalleryContainer>
           <S.SmallImagesWrapper>
             {this.state.productGallery.map((image, index) => (
@@ -126,23 +121,19 @@ class Product extends React.Component {
           </S.ImageWrapper>
         </S.GalleryContainer>
         <S.ProductDetailsContainer>
-          <FlexContainer
-            width="100%"
-            direction="column"
-            tabletMinScreen="width: 70%"
-          >
-            <FlexContainer width="100%" direction="column" align="flex-start">
+          <FlexContainer width="70%" column>
+            <FlexContainer width="100%" column align="flex-start">
               <S.Title weight="600">{this.state.productData.brand}</S.Title>
               <S.Title weight="400">{this.state.productData.name}</S.Title>
             </FlexContainer>
             {this.state.productData.attributes !== undefined &&
               this.state.productData.attributes.map((variation, index) => (
                 <div key={index}>
-                  <FlexContainer styleProps="margin-top: 3.07rem;">
+                  <S.AttributeNameWrapper>
                     <S.Title weight="700" size="1.29rem">
                       {variation.name}:
                     </S.Title>
-                  </FlexContainer>
+                  </S.AttributeNameWrapper>
                   <FlexContainer width="100%" justify="space-start">
                     {variation.items.map((item, index) => (
                       <S.AttributeButton
@@ -175,12 +166,7 @@ class Product extends React.Component {
                   </FlexContainer>
                 </div>
               ))}
-            <FlexContainer
-              width="100%"
-              direction="column"
-              align="flex-start"
-              styleProps="margin-top: 2.85rem;"
-            >
+            <S.PriceWrapper column width="100%" align="flex-start">
               <S.Title weight="700" size="1.29rem">
                 Price:
               </S.Title>
@@ -191,13 +177,8 @@ class Product extends React.Component {
                     (el) => el.currency.label === currency.label
                   ).amount}
               </S.Title>
-            </FlexContainer>
-            <FlexContainer
-              width="100%"
-              direction="column"
-              justify="space-between"
-              styleProps="margin-top: 1.43rem;"
-            >
+            </S.PriceWrapper>
+            <S.BottomWrapper column width="100%" justify="space-between">
               <Button
                 width="100%"
                 fontWeight="600"
@@ -220,10 +201,10 @@ class Product extends React.Component {
               <S.Paragraph>
                 {parse(`${this.state.productData.description}`)}
               </S.Paragraph>
-            </FlexContainer>
+            </S.BottomWrapper>
           </FlexContainer>
         </S.ProductDetailsContainer>
-      </FlexContainer>
+      </S.PageContainer>
     );
   }
 }

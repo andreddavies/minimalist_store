@@ -11,6 +11,7 @@ import Heading from "../../atoms/Heading/Heading";
 import withRouter from "../../../hocs/withRouter";
 import { GET_CURRENCIES } from "../../../services/queries/currencies";
 import { GET_CATEGORIES } from "../../../services/queries/categories";
+
 import * as S from "./Header.styles";
 
 class Header extends React.Component {
@@ -25,7 +26,7 @@ class Header extends React.Component {
 
       this.setState({ categories: data.categories });
     } catch (err) {
-      console.log(err);
+      console.log(err.errors[0].message);
     }
   };
 
@@ -35,7 +36,7 @@ class Header extends React.Component {
 
       this.setState({ currencies: data.currencies });
     } catch (err) {
-      console.log(err);
+      console.log(err.errors[0].message);
     }
   };
 
@@ -56,6 +57,8 @@ class Header extends React.Component {
       setCartOverlay,
       currentCategory,
     } = this.props;
+
+    console.log(this.state.currencies);
 
     return (
       <S.HeaderContainer>
@@ -84,13 +87,18 @@ class Header extends React.Component {
           </S.Box>
           <S.Box justify="flex-start">
             <Select
-              defaultValue={`${currency.symbol} ${currency.label}`} // Change this
+              defaultValue={this.state.currencies.find(
+                (el) => el.label === currency.label
+              )}
               onChange={(event) => {
                 setCurrency(this.state.currencies[event.target.selectedIndex]);
               }}
             >
               {this.state.currencies.map((option, index) => (
-                <option key={index}>
+                <option
+                  key={index}
+                  // selected={currency.label === option.label}
+                >
                   {option.symbol} {option.label}
                 </option>
               ))}

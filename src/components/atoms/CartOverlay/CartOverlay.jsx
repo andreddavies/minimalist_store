@@ -22,40 +22,13 @@ class CartOverlay extends Component {
       )[currency.label]();
 
     return (
-      <FlexContainer
+      <S.OverlayContainer
         width="100%"
         justify="center"
-        styleProps={`
-            right: 0;
-            top: 64px;
-            z-index: 999999;
-            background: #fff;
-            position: absolute;
-            height: ${products.length > 0 && "70%"};
-            overflow-y: ${products.length > 0 && "scroll"};
-            ::-o-scrollbar {
-              display: none;
-            }
-            ::-moz-scrollbar {
-              display: none;
-            }
-            ::-webkit-scrollbar {
-              display: none;
-            }
-        `}
-        tabletMinScreen={`
-            right: 200px;
-            max-width: 325px;
-            max-height: 540px;
-        `}
+        cartEmpty={products.length === 0}
       >
-        <FlexContainer margin="0" width="90%" align="center" direction="column">
-          <FlexContainer
-            margin="0"
-            width="100%"
-            direction="column"
-            styleProps="text-align: left"
-          >
+        <FlexContainer width="90%" align="center" column>
+          <S.ContentWrapper column width="100%">
             <FlexContainer margin="0">
               <Heading color="primary" size="1.15rem" weight="700">
                 My Bag,
@@ -73,75 +46,57 @@ class CartOverlay extends Component {
               products.map((product, index) => {
                 return (
                   <FlexContainer
+                    column
                     key={index}
                     width="100%"
-                    direction="column"
                     margin="1rem 0 0 0"
                   >
-                    <FlexContainer
-                      margin="1rem 0"
-                      tabletMinScreen={`
-                        height: 137px;
-                      `}
-                    >
+                    <S.Card margin="1rem 0">
                       <FlexContainer
+                        column
                         width="50%"
-                        justify="center"
                         align="flex-start"
-                        direction="column"
+                        justify="space-between"
                       >
-                        <Heading
-                          margin="0.85rem 0 0 0"
-                          size="1.15rem"
-                          weight="300"
-                        >
+                        <Heading margin="0" weight="300" size="1.15rem">
                           {product.brand} <br />
                           {product.name} <br />
                         </Heading>
-                        <Heading
-                          margin="0.85rem 0 0 0"
-                          size="1.15rem"
-                          weight="500"
-                        >
+                        <Heading margin="0" weight="500" size="1.15rem">
                           {productPrice(product)}
                         </Heading>
-                        <FlexContainer width="100%" align="center">
-                          <FlexContainer margin="0">
-                            {product.selectedAttributes.swatch !== undefined &&
-                              product.selectedAttributes.swatch && (
-                                <Button
-                                  width="45px"
-                                  height="45px"
-                                  fontSize="1rem"
-                                  btnStyle="none"
-                                  fontWeight="400"
-                                  margin="0 10px 0 0"
-                                  styleProps="cursor: default;"
-                                >
-                                  <div
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      background:
-                                        product.selectedAttributes.swatch[0],
-                                    }}
-                                  />
-                                </Button>
-                              )}
-                            {product.selectedAttributes.text !== undefined &&
-                              product.selectedAttributes.text && (
-                                <Button
-                                  width="45px"
-                                  height="45px"
-                                  fontSize="1rem"
-                                  fontWeight="400"
-                                  btnStyle="secondary"
-                                  styleProps="cursor: default;"
-                                >
-                                  {product.selectedAttributes.text[0]}
-                                </Button>
-                              )}
-                          </FlexContainer>
+                        <FlexContainer margin="0" width="100%" align="center">
+                          {product.selectedAttributes.swatch !== undefined &&
+                            product.selectedAttributes.swatch && (
+                              <Button
+                                width="30px"
+                                height="30px"
+                                fontSize="1rem"
+                                btnStyle="none"
+                                fontWeight="400"
+                                margin="0 10px 0 0"
+                                styleProps="cursor: default;" //remove this
+                              >
+                                <S.SwatchFiller
+                                  background={
+                                    product.selectedAttributes.swatch[0]
+                                  }
+                                />
+                              </Button>
+                            )}
+                          {product.selectedAttributes.text !== undefined &&
+                            product.selectedAttributes.text && (
+                              <Button
+                                width="30px"
+                                height="30px"
+                                fontSize="1rem"
+                                fontWeight="400"
+                                btnStyle="secondary"
+                                styleProps="cursor: default;" //remove this
+                              >
+                                {product.selectedAttributes.text[0]}
+                              </Button>
+                            )}
                         </FlexContainer>
                       </FlexContainer>
                       <FlexContainer
@@ -149,12 +104,11 @@ class CartOverlay extends Component {
                         align="center"
                         justify="flex-end"
                       >
-                        <FlexContainer
+                        <S.CounterWrapper
+                          column
                           width="auto"
                           align="center"
-                          direction="column"
                           justify="space-between"
-                          styleProps={`height: 137px;`}
                         >
                           <Button
                             width="24px"
@@ -191,7 +145,7 @@ class CartOverlay extends Component {
                           >
                             -
                           </Button>
-                        </FlexContainer>
+                        </S.CounterWrapper>
                         <FlexContainer
                           width="100%"
                           height="100%"
@@ -204,14 +158,14 @@ class CartOverlay extends Component {
                           />
                         </FlexContainer>
                       </FlexContainer>
-                    </FlexContainer>
+                    </S.Card>
                   </FlexContainer>
                 );
               })}
-          </FlexContainer>
+          </S.ContentWrapper>
           {children}
         </FlexContainer>
-      </FlexContainer>
+      </S.OverlayContainer>
     );
   }
 }

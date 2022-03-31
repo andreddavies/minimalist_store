@@ -4,18 +4,19 @@ import * as S from "./FlexContainer.styles";
 
 class FlexContainer extends React.Component {
   render() {
+    const { wrap, width, margin, align, justify, column, children } =
+      this.props;
+
     return (
       <S.Container
-        wrap={this.props.wrap}
-        width={this.props.width}
-        align={this.props.align}
-        margin={this.props.margin}
-        justify={this.props.justify}
-        direction={this.props.direction}
-        styleProps={this.props.styleProps}
-        tabletMinScreen={this.props.tabletMinScreen}
+        wrap={wrap}
+        width={width}
+        align={align}
+        column={column}
+        margin={margin}
+        justify={justify}
       >
-        {this.props.children}
+        {children}
       </S.Container>
     );
   }

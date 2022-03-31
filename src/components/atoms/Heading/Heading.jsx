@@ -10,7 +10,6 @@ class Heading extends React.Component {
         color={this.props.color}
         margin={this.props.margin}
         weight={this.props.weight}
-        tabletMinScreen={this.props.tabletMinScreen}
       >
         {this.props.children}
       </S.Container>

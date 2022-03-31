@@ -1,11 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
 import Heading from "../../atoms/Heading/Heading";
 import CartIcon from "../../../icons/AddToCartIcon";
 import Paragraph from "../../atoms/Paragraph/Paragraph";
-import FlexContainer from "../../atoms/FlexContainer/FlexContainer";
 
 import * as S from "./ProductCard.styles";
 
@@ -59,12 +57,8 @@ class ProductCard extends React.Component {
 
     return (
       <S.ProductItem>
-        <Link to={`/product/${product.id}`} style={{ textDecoration: "none" }}>
-          <FlexContainer
-            width="100%"
-            direction="column"
-            styleProps="padding: 16px"
-          >
+        <S.StyledLink to={`/product/${product.id}`}>
+          <S.ItemWrapper width="100%" column>
             <S.ImageWrapper inStock={product.inStock}>
               {!product.inStock && (
                 <S.ImageOverflow>
@@ -100,8 +94,8 @@ class ProductCard extends React.Component {
                 </Paragraph>
               </S.PriceWrapper>
             </S.ProductInfoWrapper>
-          </FlexContainer>
-        </Link>
+          </S.ItemWrapper>
+        </S.StyledLink>
       </S.ProductItem>
     );
   }
