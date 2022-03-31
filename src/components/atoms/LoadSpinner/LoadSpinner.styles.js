@@ -12,14 +12,9 @@ const SpinnerContainer = styled.div`
 `;
 
 const StyledSpinner = styled.svg`
+  width: 30%;
+  height: 30%;
   animation: rotate 1s linear infinite;
-  width: ${({ width }) => (!width && "100%") || width};
-  height: ${({ height }) => (!height && "100%") || height};
-
-  @media screen and (min-width: 768px) {
-    width: 30%;
-    height: 30%;
-  }
 
   & .path {
     stroke: #5ece7b;

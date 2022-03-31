@@ -1,6 +1,15 @@
 import styled from "styled-components";
 
 import { Button } from "../../atoms/Button/Button.styles";
+import { Container as FlexContainer } from "../../atoms/FlexContainer/FlexContainer.styles";
+
+const PageContainer = styled(FlexContainer)`
+  margin: 5.7rem 0 0 0;
+`;
+
+const AttributeNameWrapper = styled(FlexContainer)`
+  margin-top: 3.07rem;
+`;
 
 const AttributeButton = styled(Button)`
   width: 63px;
@@ -15,21 +24,22 @@ const SwatchFiller = styled.div`
   background: ${({ backgroundColor }) => backgroundColor};
 `;
 
+const PriceWrapper = styled(FlexContainer)`
+  margin-top: 2.85rem;
+`;
+
 const GalleryContainer = styled.div`
-  width: 100%;
+  width: 60%;
   display: flex;
   align-items: flex-start;
-  flex-direction: column-reverse;
-
-  @media screen and (min-width: 768px) {
-    width: 60%;
-    flex-direction: row;
-  }
 `;
 
 const ImageWrapper = styled.div`
-  width: 100%;
-  max-height: 200px;
+  width: 80%;
+  display: flex;
+  max-height: 511px;
+  align-items: center;
+  justify-content: center;
 
   & > img {
     width: auto;
@@ -38,81 +48,48 @@ const ImageWrapper = styled.div`
     max-height: 511px;
     object-fit: contain;
   }
-
-  @media screen and (min-width: 768px) {
-    width: 80%;
-    display: flex;
-    max-height: 511px;
-    align-items: center;
-    justify-content: center;
-  }
 `;
 
 const SmallImagesWrapper = styled.div`
-  width: 100%;
-  height: 80px;
+  width: 12%;
+  height: 100%;
+  margin-top: 0;
   display: flex;
-  overflow-x: scroll;
-  margin-top: 0.75rem;
+  overflow-x: auto;
+  max-height: 511px;
+  overflow-y: scroll;
+  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
 
-  & > img {
-    width: 80px;
-    height: 100%;
-    cursor: pointer;
-    max-height: 80px;
-    margin-left: 20px;
-    object-fit: contain;
-    ${({ selected }) => selected && "border: 5px solid #CCC"};
-
-    @media screen and (min-width: 768px) {
-      width: 100%;
-      margin-left: 0;
-      max-height: 150px;
-      margin-bottom: 20px;
-    }
+  ::-o-scrollbar {
+    display: none;
+  }
+  ::-moz-scrollbar {
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
   }
 
-  @media screen and (min-width: 768px) {
-    width: 12%;
+  & > img {
+    width: 100%;
     height: 100%;
-    margin-top: 0;
-    overflow-x: auto;
-    max-height: 511px;
-    overflow-y: scroll;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-between;
-
-    ::-o-scrollbar {
-      display: none;
-    }
-    ::-moz-scrollbar {
-      display: none;
-    }
-    ::-webkit-scrollbar {
-      display: none;
-    }
+    cursor: pointer;
+    max-height: 150px;
+    margin-bottom: 20px;
+    object-fit: contain;
+    ${({ selected }) => selected && "border: 5px solid #CCC"};
   }
 `;
 
 const ProductDetailsContainer = styled.div`
-  width: 100%;
-  margin-top: 1.2rem;
-
-  @media screen and (min-width: 768px) {
-    width: 35%;
-    margin-top: 0;
-  }
+  width: 35%;
 `;
 
 const Title = styled.h3`
   font-weight: ${({ weight }) => `${weight}`};
-  font-size: ${({ size }) => (!size && "1.5rem") || `${size}`};
-
-  @media screen and (min-width: 768px) {
-    font-size: ${({ size }) => (!size && "2.143rem") || `${size}`};
-  }
+  font-size: ${({ size }) => (!size && "2.143rem") || `${size}`};
 `;
 
 const Paragraph = styled.div`
@@ -122,13 +99,21 @@ const Paragraph = styled.div`
   margin-top: 2.85rem;
 `;
 
+const BottomWrapper = styled(FlexContainer)`
+  margin-top: 1.43rem;
+`;
+
 export {
   Title,
   Paragraph,
   ImageWrapper,
   SwatchFiller,
+  PriceWrapper,
+  BottomWrapper,
+  PageContainer,
   AttributeButton,
   GalleryContainer,
   SmallImagesWrapper,
+  AttributeNameWrapper,
   ProductDetailsContainer,
 };

@@ -6,7 +6,7 @@ const Container = styled.div`
   width: 80%;
   display: flex;
   z-index: 9999;
-  height: 200px;
+  height: 100px;
   position: fixed;
   padding: 10px 20px;
   border-radius: 10px;
@@ -14,10 +14,6 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
   background: ${({ theme, type }) => theme.colors.alert[type].background};
   display: ${({ isShowing }) => (isShowing && "flex") || "none"};
-
-  @media screen and(min-width: 768px) {
-    height: 100px;
-  }
 `;
 
 const CloseButton = styled.button`

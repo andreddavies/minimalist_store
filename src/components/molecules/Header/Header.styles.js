@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
 const HeaderContainer = styled.header`
+  top: 0;
   width: 100%;
+  z-index: 105;
   height: 80px;
   display: flex;
+  position: fixed;
   justify-content: center;
+  background: ${({ theme }) => theme.colors.primary};
 `;
 
 const CenterWrapper = styled.div`
@@ -19,16 +23,12 @@ const Box = styled.div`
   display: flex;
   align-items: center;
   justify-content: ${({ justify }) => (!justify && "center") || `${justify}`};
-
-  @media screen and (min-width: 768px) {
-    justify-content: ${({ justify }) => justify && "center"};
-  }
 `;
 
 const CartQuantity = styled.div`
   top: -35px;
-  right: -5px;
   width: 20px;
+  right: -10px;
   height: 20px;
   display: flex;
   position: relative;
@@ -36,11 +36,6 @@ const CartQuantity = styled.div`
   align-items: center;
   justify-content: center;
   background: ${({ theme }) => theme.colors.cart.overlay.background};
-
-  @media screen and (min-width: 768px) {
-    top: -35px;
-    right: -10px;
-  }
 `;
 
 const Image = styled.img`

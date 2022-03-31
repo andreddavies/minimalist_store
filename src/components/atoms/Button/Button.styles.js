@@ -18,8 +18,6 @@ const Button = styled.button`
   height: ${({ height }) => (!height && "52px") || `${height}`};
   font-weight: ${({ fontWeight }) => fontWeight && `${fontWeight}`};
 
-  ${({ styleProps }) => styleProps && `${styleProps}`};
-
   &&:hover {
     background: ${({ theme, btnStyle }) =>
       (btnStyle === "none" && "none") || theme.colors.buttons[btnStyle].hover};
@@ -28,10 +26,6 @@ const Button = styled.button`
   &&:active {
     background: ${({ theme, btnStyle }) =>
       (btnStyle === "none" && "none") || theme.colors.buttons[btnStyle].active};
-  }
-
-  @media screen and (min-width: 768px) {
-    ${({ tabletMinScreen }) => tabletMinScreen && `${tabletMinScreen}`};
   }
 `;
 

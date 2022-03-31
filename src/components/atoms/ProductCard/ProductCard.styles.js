@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+import { Container as FlexContainer } from "../FlexContainer/FlexContainer.styles";
 
 const IconWrapper = styled.div`
   top: -26px;
@@ -16,10 +19,9 @@ const IconWrapper = styled.div`
 `;
 
 const ProductItem = styled.li`
-  width: 40%;
-  margin: 50px 0;
+  width: 33.3%;
+  margin: 40px 0;
   cursor: pointer;
-  max-width: 354px;
 
   &&:hover {
     box-shadow: 0px 4px 35px
@@ -31,12 +33,15 @@ const ProductItem = styled.li`
       }
     }
   }
+`;
 
-  @media screen and (min-width: 768px) {
-    width: 33.3%;
-    margin: 40px 0;
-    max-width: none;
-  }
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const ItemWrapper = styled(FlexContainer)`
+  padding: 16px;
+  align-items: center;
 `;
 
 const ImageWrapper = styled.div`
@@ -55,7 +60,7 @@ const ImageOverflow = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 90;
   bottom: 60px;
   display: flex;
   position: absolute;
@@ -67,41 +72,32 @@ const ImageOverflow = styled.div`
 const ProductInfoWrapper = styled.div`
   width: 100%;
   display: flex;
-  margin-top: -1.5rem;
+  margin-top: -3rem;
   flex-direction: column;
   align-items: flex-start;
-
-  @media screen and (min-width: 768px) {
-    margin-top: -3rem;
-  }
 `;
 
 const Title = styled.h3`
   font-weight: 300;
-  font-size: 0.9rem;
+  font-size: 1.17rem;
+  margin-top: 1.7rem;
   color: ${({ theme, inStock }) =>
     !inStock && theme.colors.productCard.outOfStock};
-
-  @media screen and (min-width: 768px) {
-    font-size: 1.17rem;
-    margin-top: 1.7rem;
-  }
 `;
 
 const PriceWrapper = styled.div`
   font-weight: 500;
+  font-size: 1.17rem;
   color: ${({ theme, inStock }) =>
     !inStock && theme.colors.productCard.outOfStock};
-
-  @media screen and (min-width: 768px) {
-    font-size: 1.17rem;
-  }
 `;
 
 export {
   Title,
+  StyledLink,
   ProductItem,
   IconWrapper,
+  ItemWrapper,
   ImageWrapper,
   PriceWrapper,
   ImageOverflow,
