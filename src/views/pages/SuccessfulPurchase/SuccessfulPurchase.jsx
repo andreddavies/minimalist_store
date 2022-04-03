@@ -6,7 +6,10 @@ class SuccessfulPurchase extends PureComponent {
   render() {
     return (
       <S.Container>
-        <img src="https://cdn.shopify.com/s/files/1/0322/1766/1575/files/casareviva.com_-_compra_realizada_com_sucesso.png?v=1584383485" />
+        <img
+          alt="Successful Purchse"
+          src="https://cdn.shopify.com/s/files/1/0322/1766/1575/files/casareviva.com_-_compra_realizada_com_sucesso.png?v=1584383485"
+        />
       </S.Container>
     );
   }

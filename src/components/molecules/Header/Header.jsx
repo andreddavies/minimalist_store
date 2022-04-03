@@ -95,10 +95,7 @@ class Header extends React.Component {
               }}
             >
               {this.state.currencies.map((option, index) => (
-                <option
-                  key={index}
-                  // selected={currency.label === option.label}
-                >
+                <option key={index} selected={currency.label === option.label}>
                   {option.symbol} {option.label}
                 </option>
               ))}

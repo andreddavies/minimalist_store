@@ -5,12 +5,14 @@ import * as S from "./Select.styles";
 
 class Select extends React.Component {
   render() {
-    const { onChange, children, cartOverlay, setCartOverlay } = this.props;
+    const { onChange, children, cartOverlay, defaultValue, setCartOverlay } =
+      this.props;
 
     return (
       <S.Select
         multiple={false}
         onChange={onChange}
+        defaultValue={defaultValue}
         onFocus={() => cartOverlay && setCartOverlay(false)}
       >
         {children}
