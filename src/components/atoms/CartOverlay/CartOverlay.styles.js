@@ -25,6 +25,18 @@ const OverlayContainer = styled(FlexContainer)`
   }
 `;
 
+const ShowAttributeContainer = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  font-weight: 400;
+  font-size: 0.8rem;
+  margin-right: 10px;
+  align-items: center;
+  border: 1px solid #000;
+  justify-content: center;
+`;
+
 const ContentWrapper = styled(FlexContainer)`
   text-align: left;
 `;
@@ -46,13 +58,15 @@ const Img = styled.img`
 const SwatchFiller = styled.div`
   width: 100%;
   height: 100%;
+  background: ${({ background }) => background};
 `;
 
 export {
   Img,
   Card,
   SwatchFiller,
-  OverlayContainer,
   ContentWrapper,
   CounterWrapper,
+  OverlayContainer,
+  ShowAttributeContainer,
 };
