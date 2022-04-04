@@ -26,14 +26,10 @@ class ProductCard extends React.Component {
       const equalProduct = cart.products.find((element) => {
         return (
           element.id === productData.id &&
-          element.selectedAttributes.text.join(
-            element.selectedAttributes.swatch
-          ) ===
-            productData.selectedAttributes.text.join(
-              productData.selectedAttributes.swatch
-            )
+          element.selectedAttributes === productData.selectedAttributes
         );
       });
+
       if (equalProduct !== undefined) {
         setProductQuantity({
           operation: "increment",
@@ -48,6 +44,7 @@ class ProductCard extends React.Component {
 
       product.attributes.map((attribute) => {
         return (attributes[attribute.type] = {
+          ...attributes[attribute.type],
           [attribute.name]: attribute.items[0].displayValue,
         });
       });
