@@ -58,8 +58,6 @@ class Header extends React.Component {
       currentCategory,
     } = this.props;
 
-    console.log(this.state.currencies);
-
     return (
       <S.HeaderContainer>
         <S.CenterWrapper>

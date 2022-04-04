@@ -66,36 +66,28 @@ class CartOverlay extends Component {
                           {productPrice(product)}
                         </Heading>
                         <FlexContainer margin="0" width="100%" align="center">
-                          {product.selectedAttributes.swatch !== undefined &&
-                            product.selectedAttributes.swatch && (
-                              <Button
-                                width="30px"
-                                height="30px"
-                                fontSize="1rem"
-                                btnStyle="none"
-                                fontWeight="400"
-                                margin="0 10px 0 0"
-                                styleProps="cursor: default;" //remove this
-                              >
-                                <S.SwatchFiller
-                                  background={
-                                    product.selectedAttributes.swatch[0]
-                                  }
-                                />
-                              </Button>
+                          {product.selectedAttributes.swatch &&
+                            Object.keys(product.selectedAttributes.swatch).map(
+                              (el, index) => (
+                                <S.ShowAttributeContainer
+                                  key={index}
+                                  withMarginRight
+                                >
+                                  <S.SwatchFiller
+                                    background={
+                                      product.selectedAttributes.swatch[el]
+                                    }
+                                  />
+                                </S.ShowAttributeContainer>
+                              )
                             )}
-                          {product.selectedAttributes.text !== undefined &&
-                            product.selectedAttributes.text && (
-                              <Button
-                                width="30px"
-                                height="30px"
-                                fontSize="1rem"
-                                fontWeight="400"
-                                btnStyle="secondary"
-                                styleProps="cursor: default;" //remove this
-                              >
-                                {product.selectedAttributes.text[0]}
-                              </Button>
+                          {product.selectedAttributes.text &&
+                            Object.keys(product.selectedAttributes.text).map(
+                              (el, index) => (
+                                <S.ShowAttributeContainer key={index}>
+                                  {product.selectedAttributes.text[el]}
+                                </S.ShowAttributeContainer>
+                              )
                             )}
                         </FlexContainer>
                       </FlexContainer>
