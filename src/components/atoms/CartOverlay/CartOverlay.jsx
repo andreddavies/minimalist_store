@@ -65,31 +65,35 @@ class CartOverlay extends Component {
                         <Heading margin="0" weight="500" size="1.15rem">
                           {productPrice(product)}
                         </Heading>
-                        <FlexContainer margin="0" width="100%" align="center">
-                          {product.selectedAttributes.swatch &&
-                            Object.keys(product.selectedAttributes.swatch).map(
-                              (el, index) => (
-                                <S.ShowAttributeContainer
-                                  key={index}
-                                  withMarginRight
-                                >
+                        {product.attributes.map((variation, index) => (
+                          <FlexContainer
+                            key={index}
+                            margin="0"
+                            width="100%"
+                            align="center"
+                            justify="flex-start"
+                          >
+                            {variation.items.map((item, index) => (
+                              <S.ShowAttributeContainer
+                                key={index}
+                                withMarginRight
+                                active={
+                                  product.selectedAttributes[variation.type][
+                                    variation.name
+                                  ] === item.displayValue
+                                }
+                                isSwatch={variation.type === "swatch"}
+                              >
+                                {(variation.type === "text" &&
+                                  item.displayValue) || (
                                   <S.SwatchFiller
-                                    background={
-                                      product.selectedAttributes.swatch[el]
-                                    }
+                                    background={item.displayValue}
                                   />
-                                </S.ShowAttributeContainer>
-                              )
-                            )}
-                          {product.selectedAttributes.text &&
-                            Object.keys(product.selectedAttributes.text).map(
-                              (el, index) => (
-                                <S.ShowAttributeContainer key={index}>
-                                  {product.selectedAttributes.text[el]}
-                                </S.ShowAttributeContainer>
-                              )
-                            )}
-                        </FlexContainer>
+                                )}
+                              </S.ShowAttributeContainer>
+                            ))}
+                          </FlexContainer>
+                        ))}
                       </FlexContainer>
                       <FlexContainer
                         width="50%"

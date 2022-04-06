@@ -4,11 +4,11 @@ import { Container as FlexContainer } from "../FlexContainer/FlexContainer.style
 
 const OverlayContainer = styled(FlexContainer)`
   top: 64px;
-  right: 200px;
+  right: 6%;
   z-index: 100;
   margin: 1rem 0;
   position: fixed;
-  max-width: 325px;
+  max-width: 360px;
   background: #fff;
   max-height: 540px;
   height: ${({ cartEmpty }) => !cartEmpty && "70%"};
@@ -26,15 +26,23 @@ const OverlayContainer = styled(FlexContainer)`
 `;
 
 const ShowAttributeContainer = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   display: flex;
   font-weight: 400;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   margin-right: 10px;
   align-items: center;
-  border: 1px solid #000;
   justify-content: center;
+  border: ${({ isSwatch, active }) =>
+    isSwatch && active ? "4px solid #ccc" : "1px solid #000"};
+
+  ${({ isSwatch, active }) =>
+    !isSwatch &&
+    active &&
+    `
+    color: #fff; background-color: #000;
+    `};
 `;
 
 const ContentWrapper = styled(FlexContainer)`
