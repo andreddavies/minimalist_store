@@ -59,16 +59,38 @@ const setAttributes = (state, payload) => {
 
 const setProductQuantity = (state, payload) => {
   const product = state.cart.products.find((product) => {
+    const productValues = Object.keys(product.selectedAttributes);
+
     return (
       product.id === payload.id &&
-      product.selectedAttributes === payload.selectedAttributes
+      productValues.filter((variation) => {
+        return Object.keys(product.selectedAttributes[variation]).filter(
+          (item) => {
+            return (
+              product.selectedAttributes[variation][item] ===
+              payload.selectedAttributes[variation][item]
+            );
+          }
+        );
+      })
     );
   });
 
   const indexOfProduct = state.cart.products.findIndex((product) => {
+    const productValues = Object.keys(product.selectedAttributes);
+
     return (
       product.id === payload.id &&
-      product.selectedAttributes === payload.selectedAttributes
+      productValues.filter((variation) => {
+        return Object.keys(product.selectedAttributes[variation]).filter(
+          (item) => {
+            return (
+              product.selectedAttributes[variation][item] ===
+              payload.selectedAttributes[variation][item]
+            );
+          }
+        );
+      })
     );
   });
 
@@ -79,6 +101,7 @@ const setProductQuantity = (state, payload) => {
       cart: {
         ...state.cart,
         quantity: (state.cart.quantity -= 1),
+        totalPrice: getPrices(state, state.cart.products),
       },
     };
   }

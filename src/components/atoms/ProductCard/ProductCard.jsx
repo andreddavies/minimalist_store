@@ -24,9 +24,20 @@ class ProductCard extends React.Component {
       };
 
       const equalProduct = cart.products.find((element) => {
+        const elementValues = Object.keys(element.selectedAttributes);
+
         return (
           element.id === productData.id &&
-          element.selectedAttributes === productData.selectedAttributes
+          elementValues.filter((variation) => {
+            return Object.keys(element.selectedAttributes[variation]).filter(
+              (item) => {
+                return (
+                  element.selectedAttributes[variation][item] ===
+                  productData.selectedAttributes[variation][item]
+                );
+              }
+            );
+          })
         );
       });
 

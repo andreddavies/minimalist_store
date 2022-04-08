@@ -7,8 +7,8 @@ const IconWrapper = styled.div`
   top: -26px;
   right: -70%;
   width: 60px;
+  z-index: 94;
   height: 60px;
-  z-index: 9999;
   display: flex;
   position: relative;
   justify-content: flex-end;
