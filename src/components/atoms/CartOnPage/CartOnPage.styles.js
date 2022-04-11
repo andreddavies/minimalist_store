@@ -4,12 +4,12 @@ import { Button } from "../../atoms/Button/Button.styles";
 import { Container as HeadingContainer } from "../../atoms/Heading/Heading.styles";
 import { Container as FlexContainer } from "../FlexContainer/FlexContainer.styles";
 
-const ContentWrapper = styled(FlexContainer)`
-  padding-top: 8px;
-`;
+const CartOnPageWrapper = styled(FlexContainer)``;
+
+const ContentWrapper = styled(FlexContainer)``;
 
 const CartNameWrapper = styled(FlexContainer)`
-  margin: 3rem 0;
+  margin: 3rem 0 1rem;
 `;
 
 const Wrapper = styled(FlexContainer)`
@@ -66,6 +66,7 @@ const Img = styled.img`
   width: 100%;
   height: 185px;
   max-width: 141px;
+  object-fit: contain;
 `;
 
 export {
@@ -80,4 +81,5 @@ export {
   CounterWrapper,
   CartNameWrapper,
   AttributeButton,
+  CartOnPageWrapper,
 };

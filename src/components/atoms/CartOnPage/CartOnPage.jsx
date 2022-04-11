@@ -13,13 +13,23 @@ import { price } from "../../../plugins/masks";
 import * as S from "./CartOnPage.styles";
 
 class CartOnPage extends React.Component {
-  state = {
-    attributes: {},
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      attributes: {},
+    };
+  }
 
   render() {
-    const { cart, currency, children, setAttributes, setProductQuantity } =
-      this.props;
+    const {
+      cart,
+      children,
+      currency,
+      setAttributes,
+      setCurrentImage,
+      setProductQuantity,
+    } = this.props;
 
     const productPrice = (product) =>
       price(
@@ -43,7 +53,7 @@ class CartOnPage extends React.Component {
 
     return (
       <FlexContainer width="100%" justify="center">
-        <FlexContainer width="90%" align="center" column>
+        <S.CartOnPageWrapper width="90%" align="center" column>
           <S.ContentWrapper column width="100%">
             <S.CartNameWrapper>
               <Heading color="primary" size="2.3rem" weight="700">
@@ -167,14 +177,29 @@ class CartOnPage extends React.Component {
                       <FlexContainer align="center" justify="center">
                         <S.ArrowButton
                           type="button"
-                          onClick={() => console.log("Hello")}
+                          onClick={() => {
+                            setCurrentImage({
+                              id: product.id,
+                              action: "decrement",
+                              selectedAttributes: product.selectedAttributes,
+                            });
+                          }}
                         >
                           <LessThanIcon width={24} height={24} />
                         </S.ArrowButton>
-                        <S.Img alt="ProductOne" src={product.gallery[0]} />
+                        <S.Img
+                          alt="ProductOne"
+                          src={product.gallery[product.currentImage]}
+                        />
                         <S.ArrowButton
                           type="button"
-                          onClick={() => console.log("Hello")}
+                          onClick={() => {
+                            setCurrentImage({
+                              id: product.id,
+                              action: "increment",
+                              selectedAttributes: product.selectedAttributes,
+                            });
+                          }}
                         >
                           <GreaterThanIcon width={24} height={24} />
                         </S.ArrowButton>
@@ -186,7 +211,7 @@ class CartOnPage extends React.Component {
             ))}
           </S.ContentWrapper>
           {children}
-        </FlexContainer>
+        </S.CartOnPageWrapper>
       </FlexContainer>
     );
   }
@@ -199,6 +224,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   setAttributes: dispatch.store.setAttributes,
+  setCurrentImage: dispatch.store.setCurrentImage,
   setProductQuantity: dispatch.store.setProductQuantity,
 });
 

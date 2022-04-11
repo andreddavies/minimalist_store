@@ -33,7 +33,7 @@ const setCart = (state, payload) => {
         quantity: (state.cart.quantity += 1),
         products: [
           ...state.cart.products,
-          { ...payload, quantity: payload.quantity },
+          { ...payload, quantity: payload.quantity, currentImage: 0 },
         ],
       },
     };
@@ -119,6 +119,44 @@ const setProductQuantity = (state, payload) => {
   };
 };
 
+const setCurrentImage = (state, payload) => {
+  const product = state.cart.products.find((product) => {
+    const productValues = Object.keys(product.selectedAttributes);
+
+    return (
+      product.id === payload.id &&
+      productValues.filter((variation) => {
+        return Object.keys(product.selectedAttributes[variation]).filter(
+          (item) => {
+            return (
+              product.selectedAttributes[variation][item] ===
+              payload.selectedAttributes[variation][item]
+            );
+          }
+        );
+      })
+    );
+  });
+
+  if (payload.action === "decrement" && product.currentImage > 0) {
+    product.currentImage -= 1;
+  }
+
+  if (
+    payload.action === "increment" &&
+    product.currentImage < product.gallery.length - 1
+  ) {
+    product.currentImage += 1;
+  }
+
+  return {
+    ...state,
+    cart: {
+      ...state.cart,
+    },
+  };
+};
+
 const clearCart = (state) => {
   return {
     ...state,
@@ -130,4 +168,10 @@ const clearCart = (state) => {
   };
 };
 
-export { setCart, setAttributes, setProductQuantity, clearCart };
+export {
+  setCart,
+  clearCart,
+  setAttributes,
+  setCurrentImage,
+  setProductQuantity,
+};

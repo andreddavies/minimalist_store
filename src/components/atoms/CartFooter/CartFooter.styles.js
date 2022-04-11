@@ -7,14 +7,14 @@ const CartFooterContainer = styled.div`
   bottom: 0;
   width: 100%;
   display: flex;
+  position: sticky;
   padding-bottom: 15px;
   justify-content: center;
   background: ${({ theme }) => theme.colors.primary};
-  position: ${({ isCartOverlay }) => (isCartOverlay && "sticky") || "fixed"};
 `;
 
 const CenterContainer = styled.div`
-  width: 85%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;

@@ -61,6 +61,7 @@ const Img = styled.img`
   width: 100%;
   height: 137px;
   max-width: 105px;
+  object-fit: contain;
 `;
 
 const SwatchFiller = styled.div`
