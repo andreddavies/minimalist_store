@@ -26,12 +26,14 @@ const OverlayContainer = styled(FlexContainer)`
 `;
 
 const ShowAttributeContainer = styled.div`
-  width: 24px;
+  width: 30px;
   height: 24px;
   display: flex;
   font-weight: 400;
   font-size: 0.6rem;
+  text-align: center;
   margin-right: 10px;
+  margin-bottom: 4px;
   align-items: center;
   justify-content: center;
   border: ${({ isSwatch, active }) =>

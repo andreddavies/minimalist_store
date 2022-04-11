@@ -84,8 +84,7 @@ class CartOverlay extends Component {
                                 }
                                 isSwatch={variation.type === "swatch"}
                               >
-                                {(variation.type === "text" &&
-                                  item.displayValue) || (
+                                {(variation.type === "text" && item.value) || (
                                   <S.SwatchFiller
                                     background={item.displayValue}
                                   />
